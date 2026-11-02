@@ -162,7 +162,7 @@ body.sheet-open #bar{display:none}
     <button type="button" data-act="restart">Restart game</button>
     <button type="button" data-act="sound">Sound: On</button>
     <button type="button" data-act="shadow">Shadows: On</button>
-    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.12 · 02/11/2026<br>50 waves · 3 difficulties</div>
+    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.14 · 02/11/2026<br>50 waves · 3 difficulties</div>
   </div>
   <div class="panel" id="status"><span class="g">Gold <span id="gold">200</span></span><span id="doorbox">Door <span id="doorbar"><span id="doorfill"></span></span><span id="doortxt"></span></span><span class="l">Village <span id="leaks"><b id="leaksN">50</b><span id="leaksM">/50</span></span></span><span class="w" id="waveTxt">Wave 01/50</span><svg id="waveHorn" viewBox="0 0 30 22" width="30" height="22" style="display:none"><g stroke="#b8860b" stroke-width="1" stroke-linejoin="round"><path d="M14 21L7 21L3 10.5L8.5 9Z" fill="#ffd23a"/><path d="M3.2 11L8.6 9.2L10.5 1Z" fill="#ffe066"/><path d="M16 21L23 21L27 10.5L21.5 9Z" fill="#ffd23a"/><path d="M26.8 11L21.4 9.2L19.5 1Z" fill="#ffe066"/></g></svg></div>
   <button class="panel" id="pause" type="button" aria-label="Pause">II</button>
@@ -178,9 +178,9 @@ body.sheet-open #bar{display:none}
     <button type="button" id="newBtn"><b>New game</b><span>Choose a difficulty</span></button>
     <button type="button" id="achBtn"><b>Achievements</b><span>Best scores by difficulty</span></button></div></div>
   <div class="panel" id="diff" hidden><div class="box"><h2>Fox Towers Defense</h2><p>Choose difficulty</p>
-    <button type="button" data-d="0"><b>Easy</b><span>Enemies +60% health, +60% damage</span></button>
-    <button type="button" data-d="1"><b>Medium</b><span>Enemies +85% health, +85% damage</span></button>
-    <button type="button" data-d="2"><b>Hard</b><span>Enemies +110% health, +110% damage</span></button>
+    <button type="button" data-d="0"><b>Easy</b><span>Enemy health and damage: 100% (base)</span></button>
+    <button type="button" data-d="1"><b>Medium</b><span>Enemy health and damage: 125%</span></button>
+    <button type="button" data-d="2"><b>Hard</b><span>Enemy health and damage: 150%</span></button>
     <button type="button" id="backBtn"><b>Back</b></button></div></div>
   <div class="panel" id="bar">
     <h3>Fox Towers Defense</h3>
@@ -331,7 +331,7 @@ var SIMLIB=(function(){
   // boss on waves 5,10,...,50: waves 5-10 weakest type (Scout), 15-20 Raider, 25-30 Bandit, 35-40 Brute, 45-50 Warlord
   function bossType(w){return (w>0&&w%5===0)?Math.min(4,Math.floor((w/5-1)/2)):-1;}
   var BOSS={mul:5,leak:5};   // boss = x5 health, gate damage and gold of its type at that wave; speed unchanged; costs 5 village points
-  var DIFF=[{hp:1.6,dmg:1.6},{hp:1.85,dmg:1.85},{hp:2.1,dmg:2.1}];   // Easy +60%, Medium +85%, Hard +110% (health and gate damage); steps of 25 points between modes
+  var DIFF=[{hp:1,dmg:1},{hp:1.25,dmg:1.25},{hp:1.5,dmg:1.5}];   // Easy = base (100%): gate damage 21/41/61/81/101 +1 per wave; Medium 125%, Hard 150% (health and gate damage)
   var SQUAD={dmg:[150,225,330,480,690,960,1300,1750,2300,3000],up:[0,80,130,200,300,440,640,900,1250,1700],rng:[10,11.1,12.2,13.3,14.4,15.6,16.7,17.8,18.9,20],base:[2.0,1.94,1.89,1.83,1.78,1.72,1.67,1.61,1.56,1.5]};                 // archers on the wall = 2 + level
   function doorMax(l){return Math.round(10000+(l-1)*20000/9);}
   var DOOR={hp:10000,regen:100,regenDelay:0,reopenAt:2000};   // door repairs 100 HP/s all the time, also while enemies attack
