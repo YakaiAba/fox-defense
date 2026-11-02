@@ -55,7 +55,7 @@ body{margin:0;background:var(--ink);color:var(--text);font-family:var(--font);ov
 @media (prefers-reduced-motion:reduce){#app canvas{cursor:default}}
 
 #status{left:50%;top:0;transform:translateX(-50%);display:flex;gap:16px;align-items:center;padding:6px 18px 7px;border-top:0;border-radius:0 0 6px 6px;font-size:18px;font-weight:700;white-space:nowrap}#status .w{font-size:26px;letter-spacing:.02em;color:#ff8a2e}
-#status .g{color:var(--gold)}#status .l{color:#ff9a8a}#leaksN{font-weight:700}
+#status .g{color:var(--gold)}#status .l{color:#ff9a8a}#leaksN{font-weight:700}#waveHorn{margin-left:-8px;flex:none}
 #doorbox{display:flex;align-items:center;gap:6px}
 #doorbar{display:inline-block;width:76px;height:10px;background:#1b1510;border:1px solid #554a3f;border-radius:3px;overflow:hidden}
 #doorfill{display:block;height:100%;width:100%;background:#6fd28b}
@@ -162,9 +162,9 @@ body.sheet-open #bar{display:none}
     <button type="button" data-act="restart">Restart game</button>
     <button type="button" data-act="sound">Sound: On</button>
     <button type="button" data-act="shadow">Shadows: On</button>
-    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.9 · 02/11/2026<br>50 waves · 3 difficulties</div>
+    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.10 · 02/11/2026<br>50 waves · 3 difficulties</div>
   </div>
-  <div class="panel" id="status"><span class="g">Gold <span id="gold">200</span></span><span id="doorbox">Door <span id="doorbar"><span id="doorfill"></span></span><span id="doortxt"></span></span><span class="l">Village <span id="leaks"><b id="leaksN">50</b><span id="leaksM">/50</span></span></span><span class="w" id="waveTxt">Wave 01/50</span></div>
+  <div class="panel" id="status"><span class="g">Gold <span id="gold">200</span></span><span id="doorbox">Door <span id="doorbar"><span id="doorfill"></span></span><span id="doortxt"></span></span><span class="l">Village <span id="leaks"><b id="leaksN">50</b><span id="leaksM">/50</span></span></span><span class="w" id="waveTxt">Wave 01/50</span><svg id="waveHorn" viewBox="0 0 30 22" width="30" height="22" style="display:none"><path d="M2 1C0.5 12 6 18 13 20L14 15C9 13.5 6 9 7 1Z" fill="#ffd23a" stroke="#b8860b" stroke-width="1.2" stroke-linejoin="round"/><path d="M28 1C29.5 12 24 18 17 20L16 15C21 13.5 24 9 23 1Z" fill="#ffd23a" stroke="#b8860b" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
   <button class="panel" id="pause" type="button" aria-label="Pause">II</button>
   <div class="panel" id="pauseTag" hidden>Paused</div>
   <button class="panel" id="speed" type="button" aria-label="Game speed">×1</button>
@@ -178,9 +178,9 @@ body.sheet-open #bar{display:none}
     <button type="button" id="newBtn"><b>New game</b><span>Choose a difficulty</span></button>
     <button type="button" id="achBtn"><b>Achievements</b><span>Best scores by difficulty</span></button></div></div>
   <div class="panel" id="diff" hidden><div class="box"><h2>Fox Towers Defense</h2><p>Choose difficulty</p>
-    <button type="button" data-d="0"><b>Easy</b><span>Standard enemies</span></button>
-    <button type="button" data-d="1"><b>Medium</b><span>Enemies +50% health, +50% damage</span></button>
-    <button type="button" data-d="2"><b>Hard</b><span>Enemies +100% health, +100% damage</span></button>
+    <button type="button" data-d="0"><b>Easy</b><span>Enemy health 30% lower than Medium</span></button>
+    <button type="button" data-d="1"><b>Medium</b><span>Reference: enemies +50% health, +50% damage</span></button>
+    <button type="button" data-d="2"><b>Hard</b><span>Enemy health 30% higher than Medium, +100% damage</span></button>
     <button type="button" id="backBtn"><b>Back</b></button></div></div>
   <div class="panel" id="bar">
     <h3>Fox Towers Defense</h3>
@@ -331,7 +331,7 @@ var SIMLIB=(function(){
   // boss on waves 5,10,...,50: waves 5-10 weakest type (Scout), 15-20 Raider, 25-30 Bandit, 35-40 Brute, 45-50 Warlord
   function bossType(w){return (w>0&&w%5===0)?Math.min(4,Math.floor((w/5-1)/2)):-1;}
   var BOSS={mul:5,leak:5};   // boss = x5 health, gate damage and gold of its type at that wave; speed unchanged; costs 5 village points
-  var DIFF=[{hp:1,dmg:1},{hp:1.5,dmg:1.5},{hp:2,dmg:2}];
+  var DIFF=[{hp:1.05,dmg:1},{hp:1.5,dmg:1.5},{hp:1.95,dmg:2}];   // health: Medium is the reference (x1.5), Easy -30% of it, Hard +30% of it
   var SQUAD={dmg:[150,225,330,480,690,960,1300,1750,2300,3000],up:[0,80,130,200,300,440,640,900,1250,1700],rng:[10,11.1,12.2,13.3,14.4,15.6,16.7,17.8,18.9,20],base:[2.0,1.94,1.89,1.83,1.78,1.72,1.67,1.61,1.56,1.5]};                 // archers on the wall = 2 + level
   function doorMax(l){return Math.round(5000+(l-1)*10000/9);}
   var DOOR={hp:5000,regen:50,regenDelay:5,reopenAt:1000};
@@ -1471,8 +1471,6 @@ var PLAZA={x:21.2,z:-10.9,r:2.2};
   }
   box(0.8,0.5,1.3,0xb9b3a5,0,2.8+1.98,0.55,g);
   box(3.4,2.8,0.06,DK,0,1.4,0.04,g);cyl(1.7,1.7,0.06,14,DK,0,2.8,0.04,g).rotation.x=Math.PI/2;
-  [-1,1].forEach(function(s){box(0.22,2.8,0.22,WD,s*1.55,1.4,0.95,g);});
-  box(3.5,0.26,0.26,WD,0,2.65,0.95,g);box(0.18,0.9,0.18,WD,-1.0,2.15,0.95,g).rotation.z=0.7;box(0.18,0.9,0.18,WD,1.0,2.15,0.95,g).rotation.z=-0.7;
   [-1,1].forEach(function(s){
     box(0.12,1.9,0.12,0x5a3a22,s*3.0,0.95,1.1,g);
     box(0.24,0.2,0.24,0x3a3a3a,s*3.0,1.95,1.1,g);
@@ -1773,8 +1771,15 @@ function makeEnemy(e){
   var aura=null;
   if(e.boss){
     var HH=EN_H[e.t]*EN_SC[e.t]*bs;
-    cone(0.55,0.7,5,0xffd25a,0,HH+0.3,0,grp,{emissive:0xffa030,emissiveIntensity:1.2});octa(0.24,0xff3a2a,0,HH+0.95,0,grp,{emissive:0xff2a1a,emissiveIntensity:1.8});
-    aura=new THREE.Mesh(slowRingG,bossRingM);aura.rotation.x=-Math.PI/2;aura.position.y=0.1;grp.add(aura);
+    var HO={emissive:0xc89010,emissiveIntensity:0.9},hs;
+    [-1,1].forEach(function(sd){
+      cone(0.17,0.6,6,0xffd23a,sd*0.34,HH+0.12,0,grp,HO).rotation.z=-sd*0.5;
+      cone(0.1,0.55,6,0xffe066,sd*0.62,HH+0.55,0,grp,HO).rotation.z=sd*0.1;
+    });
+    aura=new THREE.Group();aura.position.y=0.1;aura.userData.fl=[];
+    var rg=new THREE.Mesh(slowRingG,fireRingM);rg.rotation.x=-Math.PI/2;aura.add(rg);
+    for(var fi=0;fi<12;fi++){var fa=fi/12*Math.PI*2,fc=new THREE.Mesh(flameG,fi%2?flameM1:flameM2);fc.position.set(Math.cos(fa)*0.43,0.15,Math.sin(fa)*0.43);aura.add(fc);aura.userData.fl.push(fc);}
+    grp.add(aura);
   }
   var sr=new THREE.Mesh(slowRingG,slowRingM);sr.rotation.x=-Math.PI/2;sr.position.y=0.06;sr.scale.setScalar(EN_SC[e.t]*1.6*bs);sr.visible=false;grp.add(sr);
   var pr=new THREE.Mesh(slowRingG,poiRingM);pr.rotation.x=-Math.PI/2;pr.position.y=0.08;pr.scale.setScalar(EN_SC[e.t]*1.9*bs);pr.visible=false;grp.add(pr);
@@ -1786,7 +1791,7 @@ function makeEnemy(e){
   scene.add(grp);scene.add(bar);
   return {grp:grp,aura:aura,p:p,sr:sr,pr:pr,bar:bar,b2:b2,fm:fm,w:w,ph:rnd()*6,seen:0};
 }
-var bossRingM=new THREE.MeshBasicMaterial({color:C(0xff3a2a),transparent:true,opacity:0.9,side:THREE.DoubleSide,depthWrite:false});
+var fireRingM=new THREE.MeshBasicMaterial({color:C(0xff6a1a),transparent:true,opacity:0.9,side:THREE.DoubleSide,depthWrite:false}),flameG=new THREE.ConeGeometry(0.08,0.4,5),flameM1=new THREE.MeshBasicMaterial({color:C(0xff4a10),transparent:true,opacity:0.92,depthWrite:false}),flameM2=new THREE.MeshBasicMaterial({color:C(0xffc030),transparent:true,opacity:0.92,depthWrite:false});
 var frameN=0;
 function updateEnemies(now){
   var i,e,v;
@@ -1806,7 +1811,7 @@ function updateEnemies(now){
       p.legL.rotation.x=0;p.legR.rotation.x=0;
       p.armR.rotation.x=-2.5+Math.abs(sv)*2.0;p.armL.rotation.x=-1.0+sv*0.5;p.g.rotation.x=0.12*Math.abs(sv);
     }
-    if(v.aura){v.aura.scale.setScalar(sc*2.6*(1+0.12*Math.sin(now*4)));v.aura.rotation.z=now;}
+    if(v.aura){v.aura.scale.setScalar(sc*2.6*(1+0.08*Math.sin(now*4)));v.aura.rotation.y=now*1.5;var fl=v.aura.userData.fl;for(var fk=0;fk<fl.length;fk++){fl[fk].scale.y=0.7+0.6*Math.abs(Math.sin(now*9+fk*1.7));fl[fk].position.y=0.15*fl[fk].scale.y;}}
     v.sr.visible=e.slowUntil>S.time;
     v.pr.visible=e.pt>0||e.bt>0;
     v.pr.material=e.bt>0?burnRingM:poiRingM;
@@ -2009,7 +2014,7 @@ function hud(force){
   var f=el('doorfill');f.style.width=(fr*100).toFixed(1)+'%';f.style.background=d.broken?'#d2574a':(fr>0.5?'#6fd28b':(fr>0.25?'#e0b040':'#d2574a'));
   var vr=Math.max(0,S.leakMax-S.leaks);setText('leaksN',vr);setText('leaksM','/'+S.leakMax);el('leaksN').style.color=vr<=10?'#ff2d2d':'';
   var shown=S.active?S.wave:Math.min(S.wave+1,S.waveMax);
-  setText('waveTxt','Wave '+(shown<10?'0':'')+shown+'/'+S.waveMax+(SIMLIB.bossType(shown)>=0?' ★':''));
+  setText('waveTxt','Wave '+(shown<10?'0':'')+shown+'/'+S.waveMax+'');el('waveHorn').style.display=SIMLIB.bossType(shown)<0?'none':'';
   var done=S.active?S.wave-1:S.wave;
   setText('q3','Difficulty: '+DNAME[S.diff]);
   var hm=SIMLIB.hpMul(shown),dfc=SIMLIB.DIFF[S.diff];
@@ -2471,7 +2476,7 @@ menu.addEventListener('click',function(e){
 });
 
 /* ---------- upgrade progress bars + max-level energy rings ---------- */
-var EN_COL={arch:0xff4a3a,stone:0xb07bff,magic:0x59d6ff,poison:0x7dff4a,fire:0xff9a1e,castle:0xffd25a};
+var EN_COL={arch:0xffd23a,stone:0x9a9ca2,magic:0x59d6ff,poison:0x7dff4a,fire:0xc2593c,castle:0xffffff};
 var uBars={},CUPW=new THREE.Vector3();
 function getUBar(key){
   if(uBars[key])return uBars[key];
@@ -2488,10 +2493,10 @@ function ringBandGeo(rx,rz,w,N){
 }
 var beadG=new THREE.OctahedronGeometry(1,0);
 function makeEnergy(col,o){
-  var g=new THREE.Group(),mt=new THREE.MeshBasicMaterial({color:C(col),transparent:true,opacity:0.8,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
+  var g=new THREE.Group(),mt=new THREE.MeshBasicMaterial({color:C(col),transparent:true,opacity:0.8,blending:o.nb?THREE.NormalBlending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
   var r1=new THREE.Mesh(ringBandGeo(o.rx,o.rz,o.w,56),mt);r1.position.y=o.y0;g.add(r1);
   var r2=new THREE.Mesh(ringBandGeo(o.r2x,o.r2z,o.w,40),mt);r2.position.y=o.y1;g.add(r2);
-  var mb=new THREE.MeshBasicMaterial({color:C(col),transparent:true,opacity:0.95,blending:THREE.AdditiveBlending,depthWrite:false}),beads=[];
+  var mb=new THREE.MeshBasicMaterial({color:C(col),transparent:true,opacity:0.95,blending:o.nb?THREE.NormalBlending:THREE.AdditiveBlending,depthWrite:false}),beads=[];
   for(var c=0;c<2;c++)for(var k=0;k<5;k++){var m=new THREE.Mesh(beadG,mb);g.add(m);beads.push({m:m,ph:c*Math.PI+(c?0.6:0),k:k});}
   return {g:g,o:o,mt:mt,beads:beads};
 }
@@ -2514,7 +2519,7 @@ function updateUp(now,dt){
     if(t.lvl>=SIMLIB.MAXLV&&!t.up&&u){
       if(!pd.en||pd.enK!==t.kind){
         if(pd.en)scene.remove(pd.en.g);
-        var th=u.top*u.sc;pd.en=makeEnergy(EN_COL[t.kind],{rx:1.85,rz:1.85,r2x:1.5,r2z:1.5,w:0.1,y0:0.35,y1:th+0.2,sp:1.7,size:0.2});pd.enK=t.kind;scene.add(pd.en.g);
+        var th=u.top*u.sc;pd.en=makeEnergy(EN_COL[t.kind],{rx:1.85,rz:1.85,r2x:1.5,r2z:1.5,w:0.1,y0:0.35,y1:th+0.2,sp:1.7,size:0.2,nb:t.kind==='stone'||t.kind==='fire'});pd.enK=t.kind;scene.add(pd.en.g);
       }
       pd.en.g.visible=true;pd.en.g.position.set(pd.x,pd.y+0.2,pd.z);updateEnergy(pd.en,now);
     }else if(pd.en)pd.en.g.visible=false;
