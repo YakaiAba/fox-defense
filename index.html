@@ -170,7 +170,7 @@ body.sheet-open #bar{display:none}
     <button type="button" data-act="restart">Restart game</button>
     <button type="button" data-act="sound">Sound: On</button>
     <button type="button" data-act="shadow">Shadows: On</button>
-    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.5 · 02/11/2026<br>50 waves · 3 difficulties</div>
+    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.6 · 02/11/2026<br>50 waves · 3 difficulties</div>
   </div>
   <div class="panel" id="status"><span class="g">Gold <span id="gold">200</span></span><span id="doorbox">Door <span id="doorbar"><span id="doorfill"></span></span><span id="doortxt"></span></span><span class="l">Village <span id="leaks">0/10</span></span><span class="w" id="waveTxt">Wave 01/50</span></div>
   <button class="panel" id="pause" type="button" aria-label="Pause">II</button>
@@ -300,11 +300,11 @@ if(typeof module!=='undefined')module.exports=MAP;
 var SIMLIB=(function(){
   // damage to the door per second rises with HP and falls with speed: stronger = tougher and slower
   var TYPES=[
-    {id:'scout',  name:'Scout',   hp:700,  speed:2.0,  dps:10, gold:5},
-    {id:'raider', name:'Raider',  hp:1350,  speed:1.65, dps:20, gold:8},
-    {id:'bandit', name:'Bandit',  hp:2500, speed:1.35, dps:30, gold:13},
-    {id:'brute',  name:'Brute',   hp:4700, speed:1.05, dps:40, gold:22},
-    {id:'warlord',name:'Warlord', hp:9500, speed:0.8,  dps:50, gold:45}
+    {id:'scout',  name:'Scout',   hp:700,  speed:2.0,  dps:1, gold:5},
+    {id:'raider', name:'Raider',  hp:1350,  speed:1.65, dps:21, gold:8},
+    {id:'bandit', name:'Bandit',  hp:2500, speed:1.35, dps:41, gold:13},
+    {id:'brute',  name:'Brute',   hp:4700, speed:1.05, dps:61, gold:22},
+    {id:'warlord',name:'Warlord', hp:9500, speed:0.8,  dps:81, gold:45}
   ];
   // counts per wave: scout, raider, bandit, brute, warlord
   var WAVES=[
@@ -334,6 +334,7 @@ var SIMLIB=(function(){
   var MAXLV=10;
   var DIFF=[{hp:1,dmg:1},{hp:1.5,dmg:1.5},{hp:2,dmg:2}];
   var SQUAD={dmg:[150,225,330,480,690,960,1300,1750,2300,3000],up:[0,80,130,200,300,440,640,900,1250,1700],rng:[10,11.1,12.2,13.3,14.4,15.6,16.7,17.8,18.9,20],base:[2.0,1.94,1.89,1.83,1.78,1.72,1.67,1.61,1.56,1.5]};                 // archers on the wall = 2 + level
+  function doorMax(l){return Math.round(5000+(l-1)*10000/9);}
   var DOOR={hp:5000,regen:50,regenDelay:5,reopenAt:1000};
 
   function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
@@ -392,7 +393,7 @@ var SIMLIB=(function(){
     S.upgradeSquad=function(){
       var c=S.squadCost();
       if(c==null||S.gold<c||S.over)return false;
-      S.gold-=c;S.squad.lvl++;S.fx.push({k:'squadup'});return true;
+      var m0=S.door.max;S.gold-=c;S.squad.lvl++;S.door.max=doorMax(S.squad.lvl);S.door.hp+=S.door.max-m0;S.fx.push({k:'squadup'});return true;
     };
 
     S.startWave=function(){
@@ -413,7 +414,7 @@ var SIMLIB=(function(){
     };
     S.restore=function(sn){
       if(!sn||sn.v!==1||!sn.towers||sn.towers.length!==S.towers.length)return false;
-      S.diff=sn.diff|0;S.wave=sn.wave|0;S.gold=sn.gold;S.leaks=sn.leaks|0;S.kills=sn.kills|0;S.squad.lvl=Math.max(1,Math.min(MAXLV,sn.squad|0));
+      S.diff=sn.diff|0;S.wave=sn.wave|0;S.gold=sn.gold;S.leaks=sn.leaks|0;S.kills=sn.kills|0;S.squad.lvl=Math.max(1,Math.min(MAXLV,sn.squad|0));S.door.max=doorMax(S.squad.lvl);
       S.door.hp=Math.max(1,Math.min(S.door.max,sn.hp));S.door.broken=!!sn.broken&&S.door.hp<DOOR.reopenAt;S.door.last=-99;
       sn.towers.forEach(function(q,i){var t=S.towers[i];t.kind=TOWER[q.k]?q.k:'arch';t.lvl=Math.max(1,Math.min(MAXLV,q.l|0));t.spent=q.s|0;t.cd=0.5;});
       S.active=false;S.enemies=[];S.proj=[];S.spawnQ=[];S.countdown=null;S.playT=+sn.pt||0;S.minDoor=sn.md>0&&sn.md<=1?+sn.md:1;S.doorHits=+sn.dh||0;S.doorLost=+sn.dl||0;
@@ -423,7 +424,7 @@ var SIMLIB=(function(){
     function spawn(t){
       var lane=(S.laneToggle^=1)?'A':'B',T=TYPES[t],mul=hpMul(S.wave);
       S.enemies.push({id:S.nid++,t:t,hp:T.hp*mul*DIFF[S.diff].hp,max:T.hp*mul*DIFF[S.diff].hp,pt:0,pdur:1,pdps:0,pacc:0,pfx:0,bt:0,bdur:1,bdps:0,bacc:0,bfx:0,lane:lane,path:paths[lane],s:0,x:0,z:0,tx:1,tz:0,
-        lat:0,rank:null,stopD:0,tl:0,atDoor:false,inside:false,slowUntil:0,slowF:0,dead:false,sp:T.speed});
+        lat:0,rank:null,stopD:0,tl:0,atDoor:false,inside:false,slowUntil:0,slowF:0,dead:false,sp:T.speed,dps:T.dps+(S.wave-1)});
     }
     function kill(e){
       if(e.dead)return;e.dead=true;
@@ -538,7 +539,7 @@ var SIMLIB=(function(){
         e.atDoor=false;
         if(!door.broken&&!e.inside&&e.rank!=null){
           var lim=doorS[e.lane]-e.stopD;
-          if(e.s>=lim){e.s=lim;e.atDoor=true;if(!e.hit){e.hit=true;S.doorHits++;}dps+=TYPES[e.t].dps*DIFF[S.diff].dmg;}
+          if(e.s>=lim){e.s=lim;e.atDoor=true;if(!e.hit){e.hit=true;S.doorHits++;}dps+=e.dps*DIFF[S.diff].dmg;}
         }else if(e.s>doorS[e.lane]+0.2){e.inside=true;}
         var tl=(e.rank!=null&&!door.broken)?e.tl:0;
         e.lat+=(tl-e.lat)*Math.min(1,dt*3);
@@ -614,7 +615,7 @@ var SIMLIB=(function(){
     };
     return S;
   }
-  return {MAXLV:MAXLV,DIFF:DIFF,hpMul:hpMul,create:create,TYPES:TYPES,WAVES:WAVES,TOWER:TOWER,UP:UP,CONVERT:CONVERT,SQUAD:SQUAD,DOOR:DOOR,posAt:posAt};
+  return {MAXLV:MAXLV,DIFF:DIFF,hpMul:hpMul,create:create,TYPES:TYPES,WAVES:WAVES,TOWER:TOWER,UP:UP,CONVERT:CONVERT,SQUAD:SQUAD,DOOR:DOOR,doorMax:doorMax,posAt:posAt};
 })();
 
 
@@ -1179,24 +1180,44 @@ castle.localToWorld(DOORW.set(0,0,2.9));
 var castleDeco=null;
 /* castle look changes at levels 2,4,6,8,10 */
 function buildCastleDeco(L){
+  var S1=0x9a9ca2,S2=0x80838a,S3=0x6e7076,DK=0x3a3d44;
   if(castleDeco){castle.remove(castleDeco);castleDeco.traverse(function(o){if(o.geometry)o.geometry.dispose();});castleDeco=null;}
   var t=Math.floor(L/2);if(t<1)return;
   var g=new THREE.Group(),GD=0xe0b040,BL=0x2f6fc0,EM={emissive:0xffa030,emissiveIntensity:1.2},CY={emissive:0x2ec8ff,emissiveIntensity:1.8};
   // level 2-3: gold cornices
   box(9.9,0.16,2.14,GD,0,3.34,0,g);box(4.6,0.14,3.2,GD,0,5.19,0.5,g);box(3.6,0.14,3.6,GD,-4.7,5.27,0.1,g);box(3.6,0.14,3.6,GD,4.9,5.27,0.1,g);
+  // level 2-3: stone plinth around the base, iron-bound doorway
+  box(10.3,0.5,2.5,S3,0,0.25,0.15,g);box(3.5,0.6,3.5,S3,-4.7,0.3,0.2,g);box(3.6,0.6,3.6,S3,4.9,0.3,0.1,g);
+  [-1,1].forEach(function(sg){box(0.2,2.5,0.12,DK,sg*1.1,1.25,2.2,g);box(0.34,0.12,0.14,DK,sg*1.1,0.6,2.22,g);box(0.34,0.12,0.14,DK,sg*1.1,1.9,2.22,g);});
+  box(2.5,0.22,0.14,DK,0,2.55,2.2,g);
   if(t>=2){   // level 4-5: banners on the towers, gold door crown
     [[-4.7,1.7],[4.9,1.67]].forEach(function(p){box(0.8,1.5,0.06,BL,p[0],3.9,p[1],g);box(0.9,0.1,0.08,GD,p[0],4.68,p[1]+0.01,g);box(0.9,0.1,0.08,GD,p[0],3.12,p[1]+0.01,g);cone(0.4,0.4,3,BL,p[0],2.95,p[1]+0.01,g).rotation.z=Math.PI;});
     box(3.0,0.2,0.4,GD,0,3.08,1.99,g);
   }
+  if(t>=2){   // level 4: thicker towers (stone sheath) and a gold-banded wall
+    box(3.2,5.6,0.5,S1,-4.7,2.8,1.85,g);box(3.4,4.2,0.5,S1,4.9,2.1,1.6,g);box(9.9,0.14,2.14,GD,0,2.2,0,g);
+  }
+  if(t>=3){   // level 6-7: barbican buttresses beside the gate + armour wall
+    [-1,1].forEach(function(sg){box(0.95,3.6,0.95,S2,sg*2.0,1.8,2.35,g);box(1.1,0.16,1.1,GD,sg*2.0,3.65,2.35,g);cone(0.6,0.9,4,BL,sg*2.0,4.2,2.35,g).rotation.y=Math.PI/4;});
+    box(9.8,1.0,0.5,S3,0,0.5,1.3,g);
+  }
   if(t>=3){   // level 6-7: blue spires on the gatehouse corners
     [[-1.9,-0.7],[1.9,-0.7],[-1.9,1.7],[1.9,1.7]].forEach(function(p){cyl(0.34,0.34,0.5,6,0x8a8d94,p[0],5.45,p[1],g);cone(0.5,1.1,6,BL,p[0],6.25,p[1],g);octa(0.1,GD,p[0],6.9,p[1],g,EM);});
+  }
+  if(t>=4){   // level 8: outer curtain walls with merlons on both sides
+    [-7.4,7.6].forEach(function(x){box(4.4,1.6,0.7,S1,x,0.8,2.1,g);box(4.5,0.16,0.8,GD,x,1.68,2.1,g);for(var i=0;i<5;i++)box(0.55,0.5,0.5,S1,x-1.9+i*0.95,1.95,2.1,g);});
+    box(0.9,3.0,0.9,S2,-9.6,1.5,2.1,g);box(0.9,3.0,0.9,S2,9.8,1.5,2.1,g);cone(0.7,0.9,4,BL,-9.6,3.45,2.1,g).rotation.y=Math.PI/4;cone(0.7,0.9,4,BL,9.8,3.45,2.1,g).rotation.y=Math.PI/4;
   }
   if(t>=4){   // level 8-9: flagpoles on both towers, gold door frame
     [[-4.7,0.1],[4.9,0.1]].forEach(function(p){box(0.1,2.3,0.1,0x5a3a22,p[0],6.4,p[1],g);box(1.0,0.6,0.05,BL,p[0]+0.55,7.2,p[1],g);box(1.0,0.1,0.06,GD,p[0]+0.55,7.2,p[1],g);});
     [-1,1].forEach(function(sg){box(0.12,2.5,0.12,GD,sg*1.45,1.25,2.0,g);});
   }
+  if(t>=5){   // level 10: a keep with a blue roof on the gatehouse, gold crown rim
+    box(2.6,2.6,1.2,S2,0,6.3,-0.4,g);box(2.9,0.2,1.5,GD,0,7.7,-0.4,g);cone(1.9,1.5,4,BL,0,8.55,-0.4,g).rotation.y=Math.PI/4;octa(0.18,GD,0,9.5,-0.4,g,EM);
+    box(0.5,0.9,0.1,0x7fe6ff,0,6.3,0.22,g,CY);box(4.8,0.2,3.4,GD,0,5.05,0.5,g);
+  }
   if(t>=5){   // level 10: glowing crown crystals + gold on all merlon caps
-    octa(0.62,0x7fe6ff,0,7.0,0.5,g,CY).scale.y=1.5;
+    octa(0.5,0x7fe6ff,0,6.6,0.9,g,CY).scale.y=1.5;
     [[-1.4,0.1],[1.4,0.1]].forEach(function(p){octa(0.3,0x7fe6ff,p[0],6.3,0.5,g,CY).scale.y=1.4;});
     cyl(1.0,1.0,0.08,10,GD,0,5.35,0.5,g);
     [-4.7,4.9].forEach(function(x){octa(0.3,0x7fe6ff,x,7.4,0.1,g,CY).scale.y=1.4;});
@@ -1939,7 +1960,8 @@ function renderSheet(){
     h+=statRow('Strikes per second',+S.squadRate().toFixed(2),L<SIMLIB.MAXLV?+S.squadRate(L+1).toFixed(2):null);
     h+=statRow('Damage per strike',D.dmg[L-1],L<SIMLIB.MAXLV?D.dmg[L]:null);
     h+=statRow('Range',S.squadRange(),L<SIMLIB.MAXLV?S.squadRange(L+1):null);
-    h+='<div class="row"><span>Door</span><b>'+Math.ceil(S.door.hp)+' / '+S.door.max+'</b></div>';
+    h+=statRow('Gate health (max)',S.door.max,L<SIMLIB.MAXLV?SIMLIB.doorMax(L+1):null,fmtS);
+    h+='<div class="row"><span>Door now</span><b>'+Math.ceil(S.door.hp)+' / '+S.door.max+'</b></div>';
     h+='</div><div class="acts">';
     if(c!=null)h+='<button class="act" data-act="squad"'+(S.gold<c?' disabled':'')+'><span>Upgrade to level '+(L+1)+'</span><b>'+c+'</b></button>';
     else h+='<div class="note">Maximum level</div>';
@@ -1978,7 +2000,7 @@ function hud(force){
   var done=S.active?S.wave-1:S.wave;
   setText('q3','Difficulty: '+DNAME[S.diff]);
   var hm=SIMLIB.hpMul(shown),dfc=SIMLIB.DIFF[S.diff];
-  for(var ek=0;ek<5;ek++){var tp=SIMLIB.TYPES[ek];setText('ed'+ek,fmtBig(tp.dps*dfc.dmg));setText('eh'+ek,fmtBig(tp.hp*hm*dfc.hp));}
+  for(var ek=0;ek<5;ek++){var tp=SIMLIB.TYPES[ek];setText('ed'+ek,fmtBig((tp.dps+shown-1)*dfc.dmg));setText('eh'+ek,fmtBig(tp.hp*hm*dfc.hp));}
   var sb=el('startBtn');
   if(S.over||S.active){sb.hidden=true;}
   else{
