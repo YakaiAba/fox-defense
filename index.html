@@ -170,7 +170,7 @@ body.sheet-open #bar{display:none}
     <button type="button" data-act="restart">Restart game</button>
     <button type="button" data-act="sound">Sound: On</button>
     <button type="button" data-act="shadow">Shadows: On</button>
-    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.6 · 02/11/2026<br>50 waves · 3 difficulties</div>
+    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.7 · 02/11/2026<br>50 waves · 3 difficulties</div>
   </div>
   <div class="panel" id="status"><span class="g">Gold <span id="gold">200</span></span><span id="doorbox">Door <span id="doorbar"><span id="doorfill"></span></span><span id="doortxt"></span></span><span class="l">Village <span id="leaks">0/10</span></span><span class="w" id="waveTxt">Wave 01/50</span></div>
   <button class="panel" id="pause" type="button" aria-label="Pause">II</button>
@@ -300,11 +300,11 @@ if(typeof module!=='undefined')module.exports=MAP;
 var SIMLIB=(function(){
   // damage to the door per second rises with HP and falls with speed: stronger = tougher and slower
   var TYPES=[
-    {id:'scout',  name:'Scout',   hp:700,  speed:2.0,  dps:1, gold:5},
-    {id:'raider', name:'Raider',  hp:1350,  speed:1.65, dps:21, gold:8},
-    {id:'bandit', name:'Bandit',  hp:2500, speed:1.35, dps:41, gold:13},
-    {id:'brute',  name:'Brute',   hp:4700, speed:1.05, dps:61, gold:22},
-    {id:'warlord',name:'Warlord', hp:9500, speed:0.8,  dps:81, gold:45}
+    {id:'scout',  name:'Scout',   hp:700,  speed:2.0,  dps:21, gold:5},
+    {id:'raider', name:'Raider',  hp:1350,  speed:1.65, dps:41, gold:8},
+    {id:'bandit', name:'Bandit',  hp:2500, speed:1.35, dps:61, gold:13},
+    {id:'brute',  name:'Brute',   hp:4700, speed:1.05, dps:81, gold:22},
+    {id:'warlord',name:'Warlord', hp:9500, speed:0.8,  dps:101, gold:45}
   ];
   // counts per wave: scout, raider, bandit, brute, warlord
   var WAVES=[
@@ -388,7 +388,7 @@ var SIMLIB=(function(){
     };
     S.squadCost=function(){return S.squad.lvl<MAXLV?SQUAD.up[S.squad.lvl]:null;};
     S.squadRange=function(l){return SQUAD.rng[(l||S.squad.lvl)-1];};
-    S.squadN=function(l){l=l||S.squad.lvl;return Math.min(7,3+Math.floor((l-1)/2));};
+    S.squadN=function(l){l=l||S.squad.lvl;return l>=10?7:(l>=7?5:(l>=5?3:2));};
     S.squadRate=function(l){l=l||S.squad.lvl;return S.squadN(l)/SQUAD.base[l-1];};
     S.upgradeSquad=function(){
       var c=S.squadCost();
@@ -1129,7 +1129,7 @@ function wizardMan(){
 /* ---------- castle (ancient gate) ---------- */
 var CAS=M.castle;
 var squadMen=[],doorLeaves=[],doorCracks=[],DOORW=new THREE.Vector3();
-var SQ_POS=[[-0.8,5.15,1.2],[0.8,5.15,1.2],[0,5.15,0.4],[4.4,5.25,0.7],[-4.7,5.25,0.7],[5.4,5.25,0.7],[-1.6,5.15,0.4]];
+var SQ_POS=[[-0.8,5.15,1.2],[0.8,5.15,1.2],[0,5.15,0.2],[4.4,5.25,0.7],[-5.2,5.25,0.7],[5.4,5.25,-0.5],[-4.2,5.25,-0.5]];   // 2 front, 1 back (middle); then right/left tower, right/left second
 var castle=(function(){
   var g=new THREE.Group(),S1=0x9a9ca2,S2=0x80838a,S3=0x6e7076;
   function merlons(w,y,z,n,c,sz){for(var i=0;i<n;i++){box(sz||0.55,0.55,0.5,c,-w/2+i*(w/(n-1)),y,z,g);}}
@@ -1191,7 +1191,7 @@ function buildCastleDeco(L){
   [-1,1].forEach(function(sg){box(0.2,2.5,0.12,DK,sg*1.1,1.25,2.2,g);box(0.34,0.12,0.14,DK,sg*1.1,0.6,2.22,g);box(0.34,0.12,0.14,DK,sg*1.1,1.9,2.22,g);});
   box(2.5,0.22,0.14,DK,0,2.55,2.2,g);
   if(t>=2){   // level 4-5: banners on the towers, gold door crown
-    [[-4.7,1.7],[4.9,1.67]].forEach(function(p){box(0.8,1.5,0.06,BL,p[0],3.9,p[1],g);box(0.9,0.1,0.08,GD,p[0],4.68,p[1]+0.01,g);box(0.9,0.1,0.08,GD,p[0],3.12,p[1]+0.01,g);cone(0.4,0.4,3,BL,p[0],2.95,p[1]+0.01,g).rotation.z=Math.PI;});
+    [[-4.7,2.16],[4.9,1.91]].forEach(function(p){box(0.8,1.5,0.06,BL,p[0],3.9,p[1],g);box(0.9,0.1,0.08,GD,p[0],4.68,p[1]+0.01,g);box(0.9,0.1,0.08,GD,p[0],3.12,p[1]+0.01,g);cone(0.4,0.4,3,BL,p[0],2.95,p[1]+0.01,g).rotation.z=Math.PI;});
     box(3.0,0.2,0.4,GD,0,3.08,1.99,g);
   }
   if(t>=2){   // level 4: thicker towers (stone sheath) and a gold-banded wall
@@ -1207,20 +1207,14 @@ function buildCastleDeco(L){
   if(t>=4){   // level 8: outer curtain walls with merlons on both sides
     [-7.4,7.6].forEach(function(x){box(4.4,1.6,0.7,S1,x,0.8,2.1,g);box(4.5,0.16,0.8,GD,x,1.68,2.1,g);for(var i=0;i<5;i++)box(0.55,0.5,0.5,S1,x-1.9+i*0.95,1.95,2.1,g);});
     box(0.9,3.0,0.9,S2,-9.6,1.5,2.1,g);box(0.9,3.0,0.9,S2,9.8,1.5,2.1,g);cone(0.7,0.9,4,BL,-9.6,3.45,2.1,g).rotation.y=Math.PI/4;cone(0.7,0.9,4,BL,9.8,3.45,2.1,g).rotation.y=Math.PI/4;
+    [-9.6,9.8].forEach(function(x){box(0.06,1.0,0.06,0x5a3a22,x,4.4,2.1,g);box(0.6,0.36,0.04,BL,x+0.33,4.7,2.1,g);box(0.6,0.07,0.05,GD,x+0.33,4.5,2.1,g);});
   }
   if(t>=4){   // level 8-9: flagpoles on both towers, gold door frame
-    [[-4.7,0.1],[4.9,0.1]].forEach(function(p){box(0.1,2.3,0.1,0x5a3a22,p[0],6.4,p[1],g);box(1.0,0.6,0.05,BL,p[0]+0.55,7.2,p[1],g);box(1.0,0.1,0.06,GD,p[0]+0.55,7.2,p[1],g);});
+    [[-4.7,0.1],[4.9,0.1]].forEach(function(p){box(0.1,2.3,0.1,0x5a3a22,p[0],6.4,p[1],g);var fx=p[0]<0?-0.55:0.55;box(1.0,0.6,0.05,BL,p[0]+fx,7.2,p[1],g);box(1.0,0.1,0.06,GD,p[0]+fx,7.2,p[1],g);});
     [-1,1].forEach(function(sg){box(0.12,2.5,0.12,GD,sg*1.45,1.25,2.0,g);});
   }
-  if(t>=5){   // level 10: a keep with a blue roof on the gatehouse, gold crown rim
-    box(2.6,2.6,1.2,S2,0,6.3,-0.4,g);box(2.9,0.2,1.5,GD,0,7.7,-0.4,g);cone(1.9,1.5,4,BL,0,8.55,-0.4,g).rotation.y=Math.PI/4;octa(0.18,GD,0,9.5,-0.4,g,EM);
-    box(0.5,0.9,0.1,0x7fe6ff,0,6.3,0.22,g,CY);box(4.8,0.2,3.4,GD,0,5.05,0.5,g);
-  }
-  if(t>=5){   // level 10: glowing crown crystals + gold on all merlon caps
-    octa(0.5,0x7fe6ff,0,6.6,0.9,g,CY).scale.y=1.5;
-    [[-1.4,0.1],[1.4,0.1]].forEach(function(p){octa(0.3,0x7fe6ff,p[0],6.3,0.5,g,CY).scale.y=1.4;});
-    cyl(1.0,1.0,0.08,10,GD,0,5.35,0.5,g);
-    [-4.7,4.9].forEach(function(x){octa(0.3,0x7fe6ff,x,7.4,0.1,g,CY).scale.y=1.4;});
+  if(t>=5){   // level 10: gold crown rim on the gatehouse and gold caps on the tower decks
+    box(4.8,0.2,3.4,GD,0,5.05,0.5,g);box(3.6,0.1,3.6,GD,-4.7,5.4,0.1,g);box(3.6,0.1,3.6,GD,4.9,5.4,0.1,g);
   }
   castleDeco=mergeStatic(g);mark(castleDeco,true,true);castle.add(castleDeco);
 }
