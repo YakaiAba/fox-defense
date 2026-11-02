@@ -164,7 +164,7 @@ body.sheet-open #bar{display:none}
     <button type="button" data-act="restart">Restart game</button>
     <button type="button" data-act="sound">Sound: On</button>
     <button type="button" data-act="shadow">Shadows: On</button>
-    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.2 · 02/11/2026<br>50 waves · 3 difficulties</div>
+    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.3 · 02/11/2026<br>50 waves · 3 difficulties</div>
   </div>
   <div class="panel" id="status"><span class="g">Gold <span id="gold">200</span></span><span id="doorbox">Door <span id="doorbar"><span id="doorfill"></span></span><span id="doortxt"></span></span><span class="l">Village <span id="leaks">0/10</span></span><span class="w" id="waveTxt">WAVE 01</span></div>
   <button class="panel" id="pause" type="button" aria-label="Pause">II</button>
@@ -1248,7 +1248,7 @@ var gateBar=(function(){
 })();
 
 /* ---------- village behind the gate: church, plaza, shops, houses and the lanes between them ---------- */
-var villagers=[],VOB=[];
+var villagers=[],VOB=[],SMOKE_SRC=[],smokes=[];
 function vFree(x,z,m){
   if(x<14.6||x>27.6||z<-18.0||z>-7.2)return false;
   for(var i=0;i<VOB.length;i++){if(Math.hypot(x-VOB[i][0],z-VOB[i][1])<VOB[i][2]+m)return false;}
@@ -1267,7 +1267,7 @@ var PLAZA={x:21.2,z:-10.9,r:2.2};
     var m=new THREE.Mesh(geo,mat(c));m.position.set(x,y,z);m.rotation.y=ry||0;p.add(m);return m;
   }
   function place(h,x,z,rot,s){h.position.set(x,0,z);h.rotation.y=rot;h.scale.setScalar(s||1);g.add(h);}
-  function house(x,z,rot,wall,roof,s){
+  function house(x,z,rot,wall,roof,s,sm){
     var h=new THREE.Group();
     box(1.6,1.0,1.3,wall,0,0.5,0,h);
     var r=cone(1.25,0.95,4,roof,0,1.46,0,h);r.rotation.y=Math.PI/4;r.scale.z=0.85;
@@ -1275,7 +1275,8 @@ var PLAZA={x:21.2,z:-10.9,r:2.2};
     box(0.3,0.58,0.06,0x5a3a22,-0.25,0.3,0.66,h);
     box(0.28,0.28,0.06,0xffd27a,0.4,0.62,0.66,h,GL);
     box(0.06,0.28,0.28,0xffd27a,0.82,0.62,0.1,h,GL);
-    place(h,x,z,rot,s||0.85);ob(x,z,1.15*(s||0.85));
+    s=(s||0.85)*0.8;place(h,x,z,rot,s);ob(x,z,1.15*s);
+    if(sm){var lx=0.45*s,lz=-0.2*s;SMOKE_SRC.push([x+lx*Math.cos(rot)+lz*Math.sin(rot),1.95*s,z-lx*Math.sin(rot)+lz*Math.cos(rot)]);}
   }
   function church(x,z,rot){
     var h=new THREE.Group(),W=0xeadfc8,ST=0xb8ad96,SL=0x56627e,DK=0x5a3a22,BLU={emissive:0x4a90e8,emissiveIntensity:0.9};
@@ -1293,7 +1294,7 @@ var PLAZA={x:21.2,z:-10.9,r:2.2};
     box(0.2,0.6,0.06,0xffd27a,0,3.2,2.77,h,GL);
     [-1.3,-0.3,0.75].forEach(function(zz){[-1,1].forEach(function(sx){box(0.07,0.75,0.34,0x5aa0e0,sx*1.2,1.0,zz,h,BLU);});});
     [[-0.9,3.4],[0.9,3.4]].forEach(function(p){box(0.5,0.12,0.5,ST,p[0]*0,0.05,p[1],h);});
-    place(h,x,z,rot,1.0);ob(x,z-0.3,2.6);
+    place(h,x,z,rot,0.8);ob(x,z-0.3,2.1);
   }
   function stall(x,z,rot,c1,c2){
     var h=new THREE.Group(),i;
@@ -1301,7 +1302,7 @@ var PLAZA={x:21.2,z:-10.9,r:2.2};
     for(i=0;i<6;i++){box(0.25,0.05,1.1,i%2?c2:c1,-0.62+i*0.25,1.2,0,h).rotation.z=0;}
     box(1.5,0.4,0.6,0x7a5230,0,0.4,0.15,h);box(1.6,0.06,0.7,0x8a6038,0,0.62,0.15,h);
     [0xd9503a,0xe0b040,0x7ab83a,0xd9503a,0xe0b040].forEach(function(c,k){ico(0.1,c,-0.5+k*0.25,0.74,0.1+(k%2)*0.12,h);});
-    place(h,x,z,rot,1.0);ob(x,z,0.95);
+    place(h,x,z,rot,0.8);ob(x,z,0.78);
   }
   function shop(x,z,rot,kind){
     var h=new THREE.Group(),wall={bake:0xe8d4a8,smith:0xb8b0a4,groc:0xdcc9a0}[kind],roof={bake:0xa8472f,smith:0x4f5560,groc:0x7a5a3a}[kind],i;
@@ -1318,7 +1319,7 @@ var PLAZA={x:21.2,z:-10.9,r:2.2};
     else if(kind==='groc'){[0xd9503a,0x7ab83a,0xe0b040,0xd9503a].forEach(function(c,k){box(0.22,0.18,0.22,c,-0.7+k*0.38,0.58,1.4,h);});box(0.5,0.45,0.5,0x8a5a33,1.0,0.22,1.55,h);}
     else{box(0.55,0.3,0.3,0x2f3036,-0.3,0.62,1.4,h);box(0.3,0.18,0.3,0x3a3b42,-0.3,0.82,1.4,h);cyl(0.22,0.22,0.42,8,0x5a3a22,0.8,0.21,1.55,h);}
     box(0.06,0.7,0.06,0x5a3a22,1.2,1.15,1.35,h);box(0.5,0.3,0.05,a1,1.43,1.4,1.35,h);box(0.28,0.14,0.06,a2,1.43,1.4,1.38,h);
-    place(h,x,z,rot,0.9);ob(x,z,1.45);
+    place(h,x,z,rot,0.72);ob(x,z,1.18);
   }
   function tree(x,z,s,c){
     var h=new THREE.Group();cyl(0.13,0.18,0.9,5,0x6b4528,0,0.45,0,h);
@@ -1330,12 +1331,12 @@ var PLAZA={x:21.2,z:-10.9,r:2.2};
   var W1=0xe6d2a8,W2=0xd9c08c,W3=0xc9b08a,R1=0xa8472f,R2=0x7a5a3a,R3=0x4f6a8a,R4=0x8a3a4a;
   // landmarks
   church(18.0,-15.1,0.66);
-  shop(24.9,-11.4,-Math.PI/2,'bake');shop(23.8,-14.6,-0.75,'smith');shop(24.1,-8.2,-2.3,'groc');
-  stall(18.6,-12.2,0.9,0xc0392b,0xf0e6d0);stall(23.0,-9.2,-2.6,0x3a6aa8,0xf0e6d0);
+  shop(25.3,-11.6,-Math.PI/2,'bake');shop(23.6,-15.0,-0.75,'smith');shop(25.0,-7.9,-2.3,'groc');
+  stall(18.6,-12.2,0.9,0xc0392b,0xf0e6d0);stall(22.4,-8.7,-2.6,0x3a6aa8,0xf0e6d0);
   // houses
-  house(15.3,-12.4,0.25,W1,R1);house(15.4,-9.6,0.15,W2,R3,0.8);house(16.1,-17.0,0.35,W3,R2);
-  house(19.9,-8.1,Math.PI,W2,R3,0.82);house(26.7,-9.3,-1.5,W1,R4,0.82);house(26.9,-13.6,-1.6,W3,R1,0.8);
-  house(26.0,-16.6,-0.5,W2,R2,0.8);house(21.6,-17.4,0.1,W1,R3,0.78);house(18.1,-18.0,0.0,W2,R1,0.75);
+  house(15.3,-12.4,0.25,W1,R1);house(16.1,-17.0,0.35,W3,R2);
+  house(19.9,-8.1,Math.PI,W2,R3,0.82);house(26.7,-9.3,-1.5,W1,R4,0.82,1);house(26.9,-13.6,-1.6,W3,R1,0.8,1);
+  house(26.0,-16.6,-0.5,W2,R2,0.8,1);house(21.6,-17.4,0.1,W1,R3,0.78);house(18.1,-18.0,0.0,W2,R1,0.75);
   // plaza well at the centre
   var px=PLAZA.x,pz=PLAZA.z;
   cyl(0.5,0.55,0.55,8,0x8c8678,px,0.28,pz,g);cyl(0.38,0.38,0.06,8,0x2a6f8a,px,0.52,pz,g);
@@ -1363,6 +1364,38 @@ var PLAZA={x:21.2,z:-10.9,r:2.2};
     pt=pt||[20.2,-10.3];
     p.g.position.set(pt[0],0.06,pt[1]);p.x=pt[0];p.z=pt[1];p.kid=kid;p.sp=kid?1.15:0.62;p.ph=i*1.7;p.wait=rr(0,2);p.tx=pt[0];p.tz=pt[1];p.moving=false;p.base=0;
     mark(p.g,true,false);scene.add(p.g);villagers.push(p);
+  });
+  /* animals: dog, cat, chicken (reuse the villager walking loop) */
+  function animal(kind,x,z){
+    var g2=new THREE.Group(),lg=pivot(g2,-0.0,0.0),rg=pivot(g2,0.0,0.0),o=new THREE.Object3D(),o2=new THREE.Object3D(),head,sc=1;
+    if(kind==='dog'){
+      box(0.3,0.3,0.7,0xb58a55,0,0.42,0,g2);head=box(0.26,0.26,0.28,0xc09a66,0,0.62,0.42,g2);box(0.12,0.1,0.12,0x3a2a1c,0,0.58,0.6,g2);
+      box(0.07,0.16,0.07,0x6a4a2a,-0.1,0.78,0.38,g2);box(0.07,0.16,0.07,0x6a4a2a,0.1,0.78,0.38,g2);box(0.07,0.07,0.3,0xb58a55,0,0.6,-0.45,g2).rotation.x=0.6;
+      [[-0.1,0.25,lg],[0.1,-0.25,lg],[0.1,0.25,rg],[-0.1,-0.25,rg]].forEach(function(l){box(0.08,0.3,0.08,0x8a6a40,l[0],0.15,l[1],l[2]);});
+    }else if(kind==='cat'){
+      box(0.22,0.22,0.5,0xe08a3a,0,0.32,0,g2);head=box(0.2,0.2,0.2,0xe89a4a,0,0.46,0.3,g2);
+      box(0.06,0.1,0.05,0xe08a3a,-0.07,0.6,0.28,g2);box(0.06,0.1,0.05,0xe08a3a,0.07,0.6,0.28,g2);box(0.05,0.05,0.4,0xe08a3a,0,0.5,-0.4,g2).rotation.x=0.8;
+      [[-0.07,0.18,lg],[0.07,-0.18,lg],[0.07,0.18,rg],[-0.07,-0.18,rg]].forEach(function(l){box(0.06,0.22,0.06,0xc87a30,l[0],0.11,l[1],l[2]);});
+    }else{
+      box(0.3,0.28,0.4,0xf4f0e6,0,0.34,0,g2);head=box(0.16,0.2,0.16,0xf8f4ea,0,0.58,0.2,g2);box(0.05,0.08,0.1,0xd9a030,0,0.56,0.32,g2);box(0.04,0.08,0.1,0xd23a2a,0,0.7,0.2,g2);
+      box(0.1,0.2,0.1,0xe8e0d0,0,0.42,-0.24,g2).rotation.x=-0.5;
+      [[-0.07,lg],[0.07,rg]].forEach(function(l){box(0.04,0.2,0.04,0xd9a030,l[0],0.1,0,l[1]);});
+    }
+    var p={g:g2,legL:lg,legR:rg,armL:o,armR:o2,head:head};
+    var pt=null,tries=0;
+    while(!pt&&tries++<80){var xx=rr(15.2,26.8),zz=rr(-16.8,-7.6);if(vFree(xx,zz,0.3))pt=[xx,zz];}
+    pt=pt||[x,z];
+    g2.position.set(pt[0],0.06,pt[1]);p.x=pt[0];p.z=pt[1];p.kid=true;p.sp=kind==='dog'?1.4:(kind==='cat'?1.0:0.7);p.ph=rnd()*6;p.wait=rr(0,2);p.tx=pt[0];p.tz=pt[1];p.moving=false;p.base=0;
+    mark(g2,true,false);scene.add(g2);villagers.push(p);
+  }
+  animal('dog',20.5,-9.0);animal('cat',24.0,-11.0);animal('hen',17.5,-11.5);
+  /* chimney smoke */
+  var smokeG=new THREE.IcosahedronGeometry(1,0);
+  SMOKE_SRC.forEach(function(c,ci){
+    for(var k=0;k<6;k++){
+      var m2=new THREE.Mesh(smokeG,new THREE.MeshBasicMaterial({color:0xe4e4e4,transparent:true,opacity:0.5,depthWrite:false}));
+      m2.visible=false;scene.add(m2);smokes.push({m:m2,x:c[0],y:c[1],z:c[2],ph:k/6+ci*0.37});
+    }
   });
 })();
 /* plaza paving + lanes (all lanes are narrower than the enemy road) */
@@ -2421,6 +2454,7 @@ function frame(){
       }
     }
   });
+  smokes.forEach(function(sm){var t=(now*0.28+sm.ph)%1;sm.m.visible=true;sm.m.position.set(sm.x+t*0.7,sm.y+0.1+t*2.0,sm.z+t*0.25);sm.m.scale.setScalar(0.1+t*0.32);sm.m.material.opacity=0.55*(1-t)*Math.min(1,t*6);});
   updateEnemies(now);
   updateProjectiles(now);
   updateDoor(now,dt);
