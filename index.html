@@ -94,6 +94,12 @@ body{margin:0;background:var(--ink);color:var(--text);font-family:var(--font);ov
 @keyframes tst{0%{opacity:0}12%{opacity:1}80%{opacity:1}100%{opacity:0}}
 #end{inset:0;display:grid;place-items:center;background:rgba(10,8,5,.6);border:0;border-radius:0;z-index:5}
 #end[hidden]{display:none}
+#ach{inset:0;display:grid;place-items:center;background:rgba(10,8,5,.6);border:0;border-radius:0;z-index:7}#ach[hidden]{display:none}
+#ach .box{background:var(--panel);border:2px solid var(--panel-edge);border-radius:8px;padding:18px 24px;width:min(380px,88vw);box-sizing:border-box;text-align:center;max-height:92%;overflow:auto;transform:scale(var(--uo))}
+#ach h2{margin:0 0 8px;font-size:28px;color:var(--gold)}#ach button,#end #again{font:inherit;color:var(--text);background:#2e2823;border:2px solid var(--panel-edge);border-radius:6px;min-height:40px;padding:0 22px;cursor:pointer;margin-top:8px}
+#end .box{max-height:94%;overflow:auto;max-width:380px;width:min(380px,88vw);box-sizing:border-box}
+.st{display:grid;grid-template-columns:1fr auto;gap:2px 14px;text-align:left;font-size:15px;margin:0 0 8px}.st b{text-align:right;color:var(--gold)}.st .sc{font-size:19px;border-top:1px solid var(--panel-edge);padding-top:4px;margin-top:2px}
+.ah{font-size:15px;font-weight:700;color:var(--gold);text-align:left;margin:8px 0 2px;border-bottom:1px solid var(--panel-edge)}.ar{display:grid;grid-template-columns:18px auto 1fr auto;gap:8px;font-size:14px;text-align:left;padding:1px 0}.ar i{font-style:normal;color:var(--muted)}.ar.me{color:#ff8a2e;font-weight:700}.ar .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nameRow{display:flex;gap:8px;align-items:center;justify-content:center;margin:6px 0}.nameRow input{font:inherit;font-size:16px;width:140px;padding:6px 8px;background:#1b1510;color:var(--text);border:2px solid var(--panel-edge);border-radius:6px}.nameRow button{margin:0!important}.ar.none{color:var(--muted);grid-template-columns:1fr}
 #end .box{background:var(--panel);border:2px solid var(--panel-edge);border-radius:8px;padding:22px 28px;text-align:center;max-width:320px}
 #end h2{margin:0 0 8px;font-size:30px;color:var(--gold)}#end p{margin:0 0 16px;font-size:17px}
 #again{font:700 20px var(--font);color:#2a1d08;background:var(--gold);border:2px solid #8a5f1c;border-radius:4px;min-height:48px;padding:0 24px;cursor:pointer}
@@ -159,11 +165,12 @@ body.sheet-open #bar{display:none}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
   </button>
   <div class="panel" id="menu" hidden>
+    <button type="button" data-act="ach">Achievements</button>
     <button type="button" data-act="reset">Reset view</button>
     <button type="button" data-act="restart">Restart game</button>
     <button type="button" data-act="sound">Sound: On</button>
     <button type="button" data-act="shadow">Shadows: On</button>
-    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.4 · 02/11/2026<br>50 waves · 3 difficulties</div>
+    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.5 · 02/11/2026<br>50 waves · 3 difficulties</div>
   </div>
   <div class="panel" id="status"><span class="g">Gold <span id="gold">200</span></span><span id="doorbox">Door <span id="doorbar"><span id="doorfill"></span></span><span id="doortxt"></span></span><span class="l">Village <span id="leaks">0/10</span></span><span class="w" id="waveTxt">Wave 01/50</span></div>
   <button class="panel" id="pause" type="button" aria-label="Pause">II</button>
@@ -172,10 +179,12 @@ body.sheet-open #bar{display:none}
   <button class="panel" id="startBtn" type="button">Start wave 1</button>
   <div class="panel" id="sheet" hidden></div>
   <div class="panel" id="toast"></div>
-  <div class="panel" id="end" hidden><div class="box"><h2 id="endTitle"></h2><p id="endText"></p><button id="again" type="button">Play again</button></div></div>
+  <div class="panel" id="end" hidden><div class="box"><h2 id="endTitle"></h2><p id="endText"></p><div id="endStats"></div><div id="endName"></div><div id="endAch"></div><button id="again" type="button">Play again</button></div></div>
+  <div class="panel" id="ach" hidden><div class="box"><h2>Achievements</h2><div id="achList"></div><button id="achBack" type="button">Back</button></div></div>
   <div class="panel" id="title" hidden><div class="box"><h2>Fox Towers Defense</h2><p>Defend the ancient gate</p>
     <button type="button" id="resumeBtn" hidden><b>Resume</b><span></span></button>
-    <button type="button" id="newBtn"><b>New game</b><span>Choose a difficulty</span></button></div></div>
+    <button type="button" id="newBtn"><b>New game</b><span>Choose a difficulty</span></button>
+    <button type="button" id="achBtn"><b>Achievements</b><span>Best scores by difficulty</span></button></div></div>
   <div class="panel" id="diff" hidden><div class="box"><h2>Fox Towers Defense</h2><p>Choose difficulty</p>
     <button type="button" data-d="0"><b>Easy</b><span>Standard enemies</span></button>
     <button type="button" data-d="1"><b>Medium</b><span>Enemies +50% health, +50% damage</span></button>
@@ -346,7 +355,7 @@ var SIMLIB=(function(){
       door:{hp:DOOR.hp,max:DOOR.hp,last:-99,broken:false},
       diff:opts.diff|0,leaks:0,leakMax:30,wave:0,waveMax:WAVES.length,active:false,countdown:null,
       time:0,over:null,towers:[],squad:{lvl:1,cd:0.6,idx:0},enemies:[],proj:[],fx:[],nid:1,
-      spawnQ:[],spawnT:0,laneToggle:0,kills:0,rng:rng
+      spawnQ:[],spawnT:0,laneToggle:0,kills:0,playT:0,minDoor:1,doorHits:0,doorLost:0,rng:rng
     };
     var paths={A:MAP.fullA,B:MAP.fullB};
     var doorS={A:MAP.laneA[MAP.laneA.length-1].s,B:MAP.laneB[MAP.laneB.length-1].s};
@@ -400,14 +409,14 @@ var SIMLIB=(function(){
     S.reseed=function(n){rng=mulberry(n);S.rng=rng;};
     S.snapshot=function(){
       return {v:1,diff:S.diff,wave:S.wave,gold:S.gold,hp:S.door.hp,broken:S.door.broken,leaks:S.leaks,kills:S.kills,squad:S.squad.lvl,
-        towers:S.towers.map(function(t){return {k:t.kind,l:t.lvl,s:t.spent};}),t:Date.now()};
+        towers:S.towers.map(function(t){return {k:t.kind,l:t.lvl,s:t.spent};}),pt:S.playT,md:S.minDoor,dh:S.doorHits,dl:S.doorLost,t:Date.now()};
     };
     S.restore=function(sn){
       if(!sn||sn.v!==1||!sn.towers||sn.towers.length!==S.towers.length)return false;
       S.diff=sn.diff|0;S.wave=sn.wave|0;S.gold=sn.gold;S.leaks=sn.leaks|0;S.kills=sn.kills|0;S.squad.lvl=Math.max(1,Math.min(MAXLV,sn.squad|0));
       S.door.hp=Math.max(1,Math.min(S.door.max,sn.hp));S.door.broken=!!sn.broken&&S.door.hp<DOOR.reopenAt;S.door.last=-99;
       sn.towers.forEach(function(q,i){var t=S.towers[i];t.kind=TOWER[q.k]?q.k:'arch';t.lvl=Math.max(1,Math.min(MAXLV,q.l|0));t.spent=q.s|0;t.cd=0.5;});
-      S.active=false;S.enemies=[];S.proj=[];S.spawnQ=[];S.countdown=null;
+      S.active=false;S.enemies=[];S.proj=[];S.spawnQ=[];S.countdown=null;S.playT=+sn.pt||0;S.minDoor=sn.md>0&&sn.md<=1?+sn.md:1;S.doorHits=+sn.dh||0;S.doorLost=+sn.dl||0;
       S.reseed(S.wave*7919+13);return true;
     };
 
@@ -529,7 +538,7 @@ var SIMLIB=(function(){
         e.atDoor=false;
         if(!door.broken&&!e.inside&&e.rank!=null){
           var lim=doorS[e.lane]-e.stopD;
-          if(e.s>=lim){e.s=lim;e.atDoor=true;dps+=TYPES[e.t].dps*DIFF[S.diff].dmg;}
+          if(e.s>=lim){e.s=lim;e.atDoor=true;if(!e.hit){e.hit=true;S.doorHits++;}dps+=TYPES[e.t].dps*DIFF[S.diff].dmg;}
         }else if(e.s>doorS[e.lane]+0.2){e.inside=true;}
         var tl=(e.rank!=null&&!door.broken)?e.tl:0;
         e.lat+=(tl-e.lat)*Math.min(1,dt*3);
@@ -542,7 +551,7 @@ var SIMLIB=(function(){
       }
       // door
       if(dps>0&&!door.broken){
-        door.hp-=dps*dt;door.last=S.time;
+        var dl0=Math.min(door.hp,dps*dt);S.doorLost+=dl0;door.hp-=dps*dt;door.last=S.time;
         if(door.hp<=0){door.hp=0;door.broken=true;S.fx.push({k:'doorbreak'});}
       }
       if(S.time-door.last>DOOR.regenDelay&&door.hp<door.max){
@@ -550,6 +559,8 @@ var SIMLIB=(function(){
         if(door.broken&&door.hp>=DOOR.reopenAt){door.broken=false;S.fx.push({k:'doorfix'});}
       }
       S.doorAttackers=dps;
+      if(S.active)S.playT+=dt;
+      var dfr=door.hp/door.max;if(dfr<S.minDoor)S.minDoor=dfr;
       // towers
       for(i=0;i<S.towers.length;i++){
         var tw=S.towers[i];tw.cd-=dt;
@@ -1990,12 +2001,62 @@ function showToast(t,sub){
 
 /* end of game */
 var endShown=false;
+var SCOREKEY='defensetowers.scores.v1',DMULT=[1,1.5,2];
+function loadScores(){try{var o=JSON.parse(localStorage.getItem(SCOREKEY)||'null');if(o&&o.length===3)return o;}catch(e){}return [[],[],[]];}
+function saveScores(o){try{localStorage.setItem(SCOREKEY,JSON.stringify(o));}catch(e){}}
+function calcScore(){
+  var lost=Math.max(0,Math.min(100,(1-S.minDoor)*100));
+  var base=Math.max(0,10000-S.playT*2-S.leaks*150-lost*20);
+  return {score:Math.round(base*DMULT[S.diff]),time:Math.round(S.playT),leaks:S.leaks,lost:Math.round(lost),kills:S.kills,diff:S.diff,hits:S.doorHits,hpLost:Math.round(S.doorLost)};
+}
+function fmtT(t){var m=Math.floor(t/60),s=t%60;return m+':'+(s<10?'0':'')+s;}
+function fmtS(v){return String(v).replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function achHtml(sc,mine){
+  var h='';
+  for(var d=2;d>=0;d--){
+    h+='<div class="ah">'+DNAME[d]+' (×'+DMULT[d].toString().replace('.',',')+')</div>';
+    if(!sc[d].length)h+='<div class="ar none">No result yet</div>';
+    sc[d].forEach(function(r,i){h+='<div class="ar'+(mine&&mine.d===d&&mine.i===i?' me':'')+'"><i>'+(i+1)+'</i><span>'+fmtS(r.score)+'</span><span class="nm">'+esc(r.name||'Player')+'</span><span>'+fmtT(r.time)+'</span></div>';});
+  }
+  return h;
+}
+function rankOf(r,all){var l=all[r.diff],n=0;for(var i=0;i<l.length;i++){if(l[i].score>r.score||(l[i].score===r.score&&l[i].time<=r.time))n++;}return n;}
+var pendWin=null,NAMEKEY='defensetowers.name';
+function lastName(){try{return localStorage.getItem(NAMEKEY)||'';}catch(e){return '';}}
+function commitWin(name){
+  if(!pendWin)return;
+  var r=pendWin.r;name=(name||'').trim().slice(0,12)||'Player';r.name=name;r.date=Date.now();
+  try{localStorage.setItem(NAMEKEY,name);}catch(e){}
+  var all=loadScores(),list=all[r.diff];list.push(r);list.sort(function(a,b){return b.score-a.score||a.time-b.time;});
+  var idx=list.indexOf(r);all[r.diff]=list.slice(0,3);saveScores(all);
+  pendWin=null;
+  el('endName').innerHTML='';
+  el('endAch').innerHTML='<h4 style="margin:0;font-size:17px;color:var(--gold)">Achievements</h4>'+achHtml(all,{d:r.diff,i:idx});
+}
+var achFrom='title',achWasPaused=false;
+function showAch(from){achFrom=from||'title';if(achFrom==='menu'){achWasPaused=userPause;if(!userPause)setPause(true);el('menu').hidden=true;}el('title').hidden=true;el('achList').innerHTML=achHtml(loadScores());el('ach').hidden=false;}
 function checkEnd(){
   if(!S.over||endShown)return;
   endShown=true;
   var win=S.over==='win';if(win)clearSave();if(win)AU.win();else AU.lose();
   el('endTitle').textContent=win?'Victory':'The village has fallen';
-  el('endText').textContent=win?('All '+S.waveMax+' waves repelled. Enemies defeated: '+S.kills+'. Enemies that reached the village: '+S.leaks+'.'):('Wave '+S.wave+' broke through. Enemies defeated: '+S.kills+'.');
+  el('endText').textContent=win?('All '+S.waveMax+' waves repelled.'):('Wave '+S.wave+' broke through. Enemies defeated: '+S.kills+'.');
+  el('endStats').innerHTML='';el('endAch').innerHTML='';
+  el('endName').innerHTML='';
+  if(win){
+    var r=calcScore(),all=loadScores(),rk=rankOf(r,all);pendWin={r:r};
+    el('endStats').innerHTML='<div class="st"><span>Mode</span><b>'+DNAME[r.diff]+'</b><span>Time (at ×1)</span><b>'+fmtT(r.time)+'</b><span>Enemies defeated</span><b>'+r.kills+'</b><span>Reached the village</span><b>'+r.leaks+' / '+S.leakMax+'</b><span>Enemies at the gate</span><b>'+r.hits+'</b><span>Gate health lost (total)</span><b>'+fmtS(r.hpLost)+'</b><span class="sc">Score</span><b class="sc">'+fmtS(r.score)+'</b></div>';
+    if(rk<3){
+      el('endName').innerHTML='<div style="font-size:15px;color:#ff8a2e">New top-3 score in '+DNAME[r.diff]+'! Enter your name:</div><div class="nameRow"><input id="nameIn" maxlength="12" autocomplete="off" placeholder="Name" value="'+esc(lastName())+'"><button type="button" id="nameOk">Save</button></div>';
+      el('endAch').innerHTML='<h4 style="margin:0;font-size:17px;color:var(--gold)">Achievements</h4>'+achHtml(all);
+      el('nameOk').addEventListener('click',function(){AU.click();commitWin(el('nameIn').value);});
+    }else{
+      pendWin=null;
+      el('endName').innerHTML='<div style="font-size:14px;color:var(--muted)">Not in the top 3 of '+DNAME[r.diff]+'.</div>';
+      el('endAch').innerHTML='<h4 style="margin:0;font-size:17px;color:var(--gold)">Achievements</h4>'+achHtml(all);
+    }
+  }
   el('end').hidden=false;setSel(null);
 }
 var paused=true,diffIdx=0,DNAME=['Easy','Medium','Hard'];
@@ -2031,7 +2092,9 @@ el('resumeBtn').addEventListener('click',function(){AU.init();AU.click();resume(
 el('newBtn').addEventListener('click',function(){AU.init();AU.click();showDiff();});
 el('backBtn').addEventListener('click',function(){AU.click();showTitle();});
 el('diff').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;AU.init();AU.click();begin(+b.dataset.d);});
-el('again').addEventListener('click',showTitle);
+el('again').addEventListener('click',function(){if(pendWin){var ni=el('nameIn');commitWin(ni?ni.value:'');}showTitle();});
+el('achBtn').addEventListener('click',function(){AU.click();showAch();});
+el('achBack').addEventListener('click',function(){AU.click();el('ach').hidden=true;if(achFrom==='menu'){if(!achWasPaused)setPause(false);}else showTitle();});
 
 /* ---------- audio: everything is synthesised with WebAudio (no files) ---------- */
 var AU=(function(){
@@ -2358,7 +2421,8 @@ var shadowOn=true;(function(){var sb=menu.querySelector('[data-act=sound]');if(s
 menu.addEventListener('click',function(e){
   var b=e.target.closest('button');if(!b)return;
   var a=b.dataset.act;
-  if(a==='reset'){panG.x=0;panG.z=0;zoomG=1;}
+  if(a==='ach'){showAch('menu');}
+  else if(a==='reset'){panG.x=0;panG.z=0;zoomG=1;}
   else if(a==='restart'){showTitle();menu.hidden=true;}
   else if(a==='sound'){var o=AU.toggle();b.textContent='Sound: '+(o?'On':'Off');}
   else if(a==='shadow'){shadowOn=!shadowOn;sun.castShadow=shadowOn;b.textContent='Shadows: '+(shadowOn?'On':'Off');}
