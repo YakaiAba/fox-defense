@@ -2242,7 +2242,8 @@ var portrait=false;
 function fitUI(){
   var ap=el('app'),w=ap.clientWidth||window.innerWidth,h=ap.clientHeight||window.innerHeight;
   portrait=h>w*1.05;el('rotate').hidden=!portrait;
-  var u=Math.min(1,Math.max(0.4,Math.min(w/1000,h/620)));
+  var f=h<=420?0.5:(h>=620?1:0.5+0.5*(h-420)/200);
+  var u=Math.min(1,Math.max(0.25,Math.min(w/1000,h/620)*f));
   document.documentElement.style.setProperty('--u',u.toFixed(3));
 }
 fitUI();window.addEventListener('resize',fitUI);window.addEventListener('orientationchange',function(){setTimeout(fitUI,200);setTimeout(fitUI,700);});
