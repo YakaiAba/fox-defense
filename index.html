@@ -65,7 +65,7 @@ body{margin:0;background:var(--ink);color:var(--text);font-family:var(--font);ov
 }
 @media (prefers-reduced-motion:reduce){#app canvas{cursor:default}}
 
-#status{left:50%;top:0;transform:translateX(-50%);display:flex;gap:16px;align-items:center;padding:6px 18px 7px;border-top:0;border-radius:0 0 6px 6px;font-size:18px;font-weight:700;white-space:nowrap}#status .w{font-size:26px;letter-spacing:.04em;color:var(--gold)}
+#status{left:50%;top:0;transform:translateX(-50%);display:flex;gap:16px;align-items:center;padding:6px 18px 7px;border-top:0;border-radius:0 0 6px 6px;font-size:18px;font-weight:700;white-space:nowrap}#status .w{font-size:26px;letter-spacing:.02em;color:#ff8a2e}
 #status .g{color:var(--gold)}#status .l{color:#ff9a8a}
 #doorbox{display:flex;align-items:center;gap:6px}
 #doorbar{display:inline-block;width:76px;height:10px;background:#1b1510;border:1px solid #554a3f;border-radius:3px;overflow:hidden}
@@ -153,7 +153,6 @@ body.sheet-open #bar{display:none}
     <ul>
       <li class="done"><i></i><span>Defend the ancient gate</span></li>
       <li class="done"><i></i><span id="q3"></span></li>
-      <li><i></i><span id="q2">Survive 50 waves</span></li>
     </ul>
   </div>
     <button class="panel" id="gear" type="button" aria-label="Settings" aria-expanded="false">
@@ -164,9 +163,9 @@ body.sheet-open #bar{display:none}
     <button type="button" data-act="restart">Restart game</button>
     <button type="button" data-act="sound">Sound: On</button>
     <button type="button" data-act="shadow">Shadows: On</button>
-    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.3 · 02/11/2026<br>50 waves · 3 difficulties</div>
+    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.4 · 02/11/2026<br>50 waves · 3 difficulties</div>
   </div>
-  <div class="panel" id="status"><span class="g">Gold <span id="gold">200</span></span><span id="doorbox">Door <span id="doorbar"><span id="doorfill"></span></span><span id="doortxt"></span></span><span class="l">Village <span id="leaks">0/10</span></span><span class="w" id="waveTxt">WAVE 01</span></div>
+  <div class="panel" id="status"><span class="g">Gold <span id="gold">200</span></span><span id="doorbox">Door <span id="doorbar"><span id="doorfill"></span></span><span id="doortxt"></span></span><span class="l">Village <span id="leaks">0/10</span></span><span class="w" id="waveTxt">Wave 01/50</span></div>
   <button class="panel" id="pause" type="button" aria-label="Pause">II</button>
   <div class="panel" id="pauseTag" hidden>Paused</div>
   <button class="panel" id="speed" type="button" aria-label="Game speed">×1</button>
@@ -1565,7 +1564,7 @@ function fireTower(){
 }
 var BUILD={arch:woodTower,stone:stoneTower,magic:magicTower,poison:poisonTower,fire:fireTower};
 var TS=0.5;
-var KNAME={arch:'Archer',stone:'Stone',magic:'Magic',poison:'Poison',fire:'Fire'};
+var KNAME={arch:'Archer',stone:'Stone',magic:'Ice',poison:'Poison',fire:'Fire'};
 function decorate(out,kind,lvl){
   var u=out.userData,t=Math.floor(lvl/2),GD=0xe0b040;
   var P={arch:{y:3.5,pt:4.45,r:1.65,by:1.6,bw:1.22,sq:1,ac:0xb23a2a},stone:{y:4.72,pt:5.25,r:1.6,by:2.4,bw:1.4,sq:1,ac:0x2f6fc0},
@@ -1909,7 +1908,7 @@ function renderSheet(){
     else h+='<div class="note">Maximum level</div>';
     if(S.canConvert(t)){
       h+='<button class="act alt" data-act="to-stone"'+(S.gold<SIMLIB.CONVERT.stone?' disabled':'')+'><span>Change to Stone tower</span><b>'+SIMLIB.CONVERT.stone+'</b></button>';
-      h+='<button class="act alt" data-act="to-magic"'+(S.gold<SIMLIB.CONVERT.magic?' disabled':'')+'><span>Change to Magic tower</span><b>'+SIMLIB.CONVERT.magic+'</b></button>';
+      h+='<button class="act alt" data-act="to-magic"'+(S.gold<SIMLIB.CONVERT.magic?' disabled':'')+'><span>Change to Ice tower</span><b>'+SIMLIB.CONVERT.magic+'</b></button>';
       h+='<button class="act alt" data-act="to-poison"'+(S.gold<SIMLIB.CONVERT.poison?' disabled':'')+'><span>Change to Poison tower</span><b>'+SIMLIB.CONVERT.poison+'</b></button>';
       h+='<button class="act alt" data-act="to-fire"'+(S.gold<SIMLIB.CONVERT.fire?' disabled':'')+'><span>Change to Fire tower</span><b>'+SIMLIB.CONVERT.fire+'</b></button>';
     }else if(t.kind==='arch')h+='<div class="note">Archer towers above level 1 can no longer change type.</div>';
@@ -1964,9 +1963,8 @@ function hud(force){
   var f=el('doorfill');f.style.width=(fr*100).toFixed(1)+'%';f.style.background=d.broken?'#d2574a':(fr>0.5?'#6fd28b':(fr>0.25?'#e0b040':'#d2574a'));
   setText('leaks',S.leaks+'/'+S.leakMax);
   var shown=S.active?S.wave:Math.min(S.wave+1,S.waveMax);
-  setText('waveTxt','WAVE '+(shown<10?'0':'')+shown);
+  setText('waveTxt','Wave '+(shown<10?'0':'')+shown+'/'+S.waveMax);
   var done=S.active?S.wave-1:S.wave;
-  setText('q2','Survive '+S.waveMax+' waves ('+done+'/'+S.waveMax+')');
   setText('q3','Difficulty: '+DNAME[S.diff]);
   var hm=SIMLIB.hpMul(shown),dfc=SIMLIB.DIFF[S.diff];
   for(var ek=0;ek<5;ek++){var tp=SIMLIB.TYPES[ek];setText('ed'+ek,fmtBig(tp.dps*dfc.dmg));setText('eh'+ek,fmtBig(tp.hp*hm*dfc.hp));}
