@@ -117,8 +117,41 @@ body.sheet-open #bar{display:none}
 #sheet .act.sell{background:#6a3a2a;border-color:#a8604a}
 @media (max-width:640px){#sheet .act{min-height:38px}#pause{right:62px;top:92px}#speed{right:10px;top:92px}#pauseTag{top:146px}}
 #sheet .two{display:flex;gap:6px}#sheet .two .act{flex:1}#sheet .note.warn{color:#ffb4a0;font-size:15px}
+
+/* auto-scale HUD to the screen (--u set by script) */
+:root{--u:1}
+#app{position:fixed;inset:0;width:auto;height:auto}
+[hidden]{display:none!important}
+#rotate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#1f2a17;color:var(--gold);font:700 24px var(--font);text-align:center;padding:24px}
+#rotate .ph{width:54px;height:92px;border:5px solid var(--gold);border-radius:12px;animation:rot 2.2s ease-in-out infinite}
+@keyframes rot{0%,20%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
+#rotate span{font-size:17px;color:var(--muted);font-weight:400}
+#quest{left:calc(10px*var(--u));top:calc(10px*var(--u));transform:scale(var(--u));transform-origin:0 0}
+#wave{top:0;transform:translateX(-50%) scale(var(--u));transform-origin:50% 0}
+#gear{right:calc(10px*var(--u));top:calc(10px*var(--u));transform:scale(var(--u));transform-origin:100% 0}
+#speed{right:calc(64px*var(--u));top:calc(10px*var(--u));transform:scale(var(--u));transform-origin:100% 0}
+#pause{right:calc(118px*var(--u));top:calc(10px*var(--u));transform:scale(var(--u));transform-origin:100% 0}
+#menu{right:calc(10px*var(--u));top:calc(64px*var(--u));transform:scale(var(--u));transform-origin:100% 0}
+#bar{left:calc(10px*var(--u));bottom:calc(10px*var(--u));transform:scale(var(--u));transform-origin:0 100%}
+#status{top:calc(52px*var(--u));transform:translateX(-50%) scale(var(--u));transform-origin:50% 0}
+#pauseTag{top:calc(104px*var(--u));transform:translateX(-50%) scale(var(--u));transform-origin:50% 0}
+#startBtn{bottom:calc(14px*var(--u));transform:translateX(-50%) scale(var(--u));transform-origin:50% 100%}
+#sheet{right:calc(10px*var(--u));bottom:calc(10px*var(--u));transform:scale(var(--u));transform-origin:100% 100%}
+#hint{right:calc(10px*var(--u));bottom:calc(10px*var(--u));transform:scale(var(--u));transform-origin:100% 100%}
+#toast{transform:translate(-50%,-50%) scale(var(--u))}
+#diff .box,#title .box,#end .box{transform:scale(var(--u))}
+@media (max-width:640px){
+  #status{top:calc(48px*var(--u))}
+  #startBtn{bottom:calc(10px*var(--u))}
+  #pause{right:calc(62px*var(--u));top:calc(92px*var(--u))}
+  #speed{right:calc(10px*var(--u));top:calc(92px*var(--u))}
+  #pauseTag{top:calc(146px*var(--u))}
+  #sheet{left:auto;width:calc((100vw - 20px*var(--u))/var(--u))}
+}
 </style>
 
+
+<div id="rotate" hidden><div class="ph"></div>Please rotate your phone<span>Fox Towers Defense is played in landscape</span></div>
 <div id="app">
   <div class="panel" id="quest">
     <h2>Defend the ancient gate</h2>
@@ -2139,7 +2172,7 @@ function frame(){
   waterTex.offset.y-=dt*0.045;
   // simulation (fixed small steps, optional ×2)
   var rem=dt*speedMul;
-  while(!paused&&!userPause&&rem>1e-6&&!S.over){var hstep=Math.min(0.05,rem);S.step(hstep);rem-=hstep;}
+  while(!paused&&!userPause&&!portrait&&rem>1e-6&&!S.over){var hstep=Math.min(0.05,rem);S.step(hstep);rem-=hstep;}
   handleFx();
   AU.setWar(S.active&&!S.over&&!userPause&&!paused);
   if(!userPause&&!paused&&S.doorAttackers>0&&!S.door.broken&&AU.isOn()){doorT-=dt;if(doorT<=0){doorT=0.5;AU.doorhit(PN(DOORW.x),S.doorAttackers);}}
@@ -2205,6 +2238,16 @@ window.__dt={
   view:function(x,z,zm){panG.x=pan.x=x;panG.z=pan.z=z;zoomG=zoom=zm;},
   render:function(){frame();}
 };
+var portrait=false;
+function fitUI(){
+  var ap=el('app'),w=ap.clientWidth||window.innerWidth,h=ap.clientHeight||window.innerHeight;
+  portrait=h>w*1.05;el('rotate').hidden=!portrait;
+  var u=Math.min(1,Math.max(0.4,Math.min(w/1000,h/620)));
+  document.documentElement.style.setProperty('--u',u.toFixed(3));
+}
+fitUI();window.addEventListener('resize',fitUI);window.addEventListener('orientationchange',function(){setTimeout(fitUI,200);setTimeout(fitUI,700);});
+if(window.ResizeObserver)new ResizeObserver(fitUI).observe(el('app'));
+document.addEventListener('pointerdown',function lk(){try{if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(function(){});}catch(e){}document.removeEventListener('pointerdown',lk);},{once:true});
 showTitle();
 requestAnimationFrame(frame);
 })();

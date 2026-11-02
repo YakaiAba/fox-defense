@@ -1,4 +1,4 @@
-var C='dt-v4',F=['./','index.html','three.min.js','icon-180.png'];
+var C='dt-v5',F=['./','index.html','three.min.js','icon-180.png'];
 self.addEventListener('install',function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll(F)}));self.skipWaiting();});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==C}).map(function(x){return caches.delete(x)}))}));self.clients.claim();});
 self.addEventListener('fetch',function(e){if(e.request.method!=='GET')return;
