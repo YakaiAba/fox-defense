@@ -1,15 +1,4 @@
-<!doctype html>
-<html lang="vi"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Fox Towers Defense">
-<meta name="theme-color" content="#2f5d2a">
-<link rel="apple-touch-icon" href="icon-180.png">
-<link rel="icon" href="icon-180.png">
-<link rel="manifest" href="manifest.webmanifest">
+<!doctype html><html><head><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Fox Towers"><meta name="theme-color" content="#1f2a17"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-180.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Fox Towers Defense</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap">
 <style>
@@ -97,7 +86,7 @@ body{margin:0;background:var(--ink);color:var(--text);font-family:var(--font);ov
 #ach{inset:0;display:grid;place-items:center;background:rgba(10,8,5,.6);border:0;border-radius:0;z-index:7}#ach[hidden]{display:none}
 #ach .box{background:var(--panel);border:2px solid var(--panel-edge);border-radius:8px;padding:18px 24px;width:min(380px,88vw);box-sizing:border-box;text-align:center;max-height:92%;overflow:auto;transform:scale(var(--uo))}
 #ach h2{margin:0 0 8px;font-size:28px;color:var(--gold)}#ach button,#end #again{font:inherit;color:var(--text);background:#2e2823;border:2px solid var(--panel-edge);border-radius:6px;min-height:40px;padding:0 22px;cursor:pointer;margin-top:8px}
-#end .box{max-height:94%;overflow:auto;max-width:380px;width:min(380px,88vw);box-sizing:border-box}
+#end .box{max-height:calc(94%/var(--uo));overflow:auto;max-width:380px;width:min(380px,88vw);box-sizing:border-box}
 .st{display:grid;grid-template-columns:1fr auto;gap:2px 14px;text-align:left;font-size:15px;margin:0 0 8px}.st b{text-align:right;color:var(--gold)}.st .sc{font-size:19px;border-top:1px solid var(--panel-edge);padding-top:4px;margin-top:2px}
 .ah{font-size:15px;font-weight:700;color:var(--gold);text-align:left;margin:8px 0 2px;border-bottom:1px solid var(--panel-edge)}.ar{display:grid;grid-template-columns:18px auto 1fr auto;gap:8px;font-size:14px;text-align:left;padding:1px 0}.ar i{font-style:normal;color:var(--muted)}.ar.me{color:#ff8a2e;font-weight:700}.ar .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nameRow{display:flex;gap:8px;align-items:center;justify-content:center;margin:6px 0}.nameRow input{font:inherit;font-size:16px;width:140px;padding:6px 8px;background:#1b1510;color:var(--text);border:2px solid var(--panel-edge);border-radius:6px}.nameRow button{margin:0!important}.ar.none{color:var(--muted);grid-template-columns:1fr}
 #end .box{background:var(--panel);border:2px solid var(--panel-edge);border-radius:8px;padding:22px 28px;text-align:center;max-width:320px}
@@ -120,6 +109,9 @@ body.sheet-open #bar{display:none}
 #sheet .act.sell{background:#6a3a2a;border-color:#a8604a}
 @media (max-width:640px){#sheet .act{min-height:38px}#pause{right:62px;top:92px}#speed{right:10px;top:92px}#pauseTag{top:62px}}
 #sheet .two{display:flex;gap:6px}#sheet .two .act{flex:1}#sheet .note.warn{color:#ffb4a0;font-size:15px}
+.pbar{height:10px;background:#1b1510;border:1px solid #554a3f;border-radius:3px;overflow:hidden;margin:4px 0 2px}.pbar i{display:block;height:100%;background:#59d6ff}
+.ar span:nth-child(2){color:var(--gold);font-weight:700;min-width:62px}.ar.me span:nth-child(2){color:#ff8a2e}.ar.hd{color:var(--muted);font-size:12px}.ar.hd span:nth-child(2){color:var(--muted);font-weight:400}
+.st small{color:var(--muted);font-size:12px}
 
 /* auto-scale HUD to the screen (--u set by script) */
 :root{--u:1;--uo:1;--m:22px}
@@ -170,7 +162,7 @@ body.sheet-open #bar{display:none}
     <button type="button" data-act="restart">Restart game</button>
     <button type="button" data-act="sound">Sound: On</button>
     <button type="button" data-act="shadow">Shadows: On</button>
-    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.7 · 02/11/2026<br>50 waves · 3 difficulties</div>
+    <div class="ver"><b>Fox Towers Defense</b><br>Version 1.8 · 02/11/2026<br>50 waves · 3 difficulties</div>
   </div>
   <div class="panel" id="status"><span class="g">Gold <span id="gold">200</span></span><span id="doorbox">Door <span id="doorbar"><span id="doorfill"></span></span><span id="doortxt"></span></span><span class="l">Village <span id="leaks">0/10</span></span><span class="w" id="waveTxt">Wave 01/50</span></div>
   <button class="panel" id="pause" type="button" aria-label="Pause">II</button>
@@ -332,6 +324,13 @@ var SIMLIB=(function(){
   var UP={arch:[0,60,95,150,240,360,520,740,1040,1450],stone:[0,90,140,210,330,490,700,980,1350,1850],magic:[0,100,150,225,340,500,720,1000,1380,1880],poison:[0,95,145,215,335,495,710,990,1360,1860],fire:[0,110,165,245,380,560,800,1120,1550,2100]};   // cost from level L to L+1
   var CONVERT={stone:90,magic:100,poison:110,fire:120};                                              // only from Archer level 1
   var MAXLV=10;
+  // upgrade time (game seconds): grows linearly with the target level; the level-10 value is the maximum per type
+  var UPT_MAX={arch:6,stone:12,magic:10,poison:13,fire:15},SQUAD_UPT=30;
+  function upTime(kind,to){return Math.round(UPT_MAX[kind]*(to-1)/(MAXLV-1)*10)/10;}
+  function squadUpTime(to){return Math.round(SQUAD_UPT*(to-1)/(MAXLV-1)*10)/10;}
+  // boss on waves 5,10,...,50: waves 5-10 weakest type (Scout), 15-20 Raider, 25-30 Bandit, 35-40 Brute, 45-50 Warlord
+  function bossType(w){return (w>0&&w%5===0)?Math.min(4,Math.floor((w/5-1)/2)):-1;}
+  var BOSS={mul:10,leak:10};   // boss = x10 health, gate damage and gold of its type at that wave; speed unchanged; counts as 10 villages
   var DIFF=[{hp:1,dmg:1},{hp:1.5,dmg:1.5},{hp:2,dmg:2}];
   var SQUAD={dmg:[150,225,330,480,690,960,1300,1750,2300,3000],up:[0,80,130,200,300,440,640,900,1250,1700],rng:[10,11.1,12.2,13.3,14.4,15.6,16.7,17.8,18.9,20],base:[2.0,1.94,1.89,1.83,1.78,1.72,1.67,1.61,1.56,1.5]};                 // archers on the wall = 2 + level
   function doorMax(l){return Math.round(5000+(l-1)*10000/9);}
@@ -355,25 +354,25 @@ var SIMLIB=(function(){
       gold:opts.gold!=null?opts.gold:200,
       door:{hp:DOOR.hp,max:DOOR.hp,last:-99,broken:false},
       diff:opts.diff|0,leaks:0,leakMax:30,wave:0,waveMax:WAVES.length,active:false,countdown:null,
-      time:0,over:null,towers:[],squad:{lvl:1,cd:0.6,idx:0},enemies:[],proj:[],fx:[],nid:1,
-      spawnQ:[],spawnT:0,laneToggle:0,kills:0,playT:0,minDoor:1,doorHits:0,doorLost:0,rng:rng
+      time:0,over:null,towers:[],squad:{lvl:1,cd:0.6,idx:0,up:null},enemies:[],proj:[],fx:[],nid:1,
+      spawnQ:[],spawnT:0,laneToggle:0,kills:0,bossKills:0,playT:0,minDoor:1,doorHits:0,doorLost:0,rng:rng
     };
     var paths={A:MAP.fullA,B:MAP.fullB};
     var doorS={A:MAP.laneA[MAP.laneA.length-1].s,B:MAP.laneB[MAP.laneB.length-1].s};
     var endS={A:MAP.fullA[MAP.fullA.length-1].s,B:MAP.fullB[MAP.fullB.length-1].s};
     S.paths=paths;S.doorS=doorS;S.endS=endS;S.gate=MAP.gate;
-    MAP.plots.forEach(function(p,i){S.towers.push({i:i,x:p.x,z:p.z,kind:'arch',lvl:1,cd:rng()*0.8,spent:0});});
+    MAP.plots.forEach(function(p,i){S.towers.push({i:i,x:p.x,z:p.z,kind:'arch',lvl:1,cd:rng()*0.8,spent:0,up:null});});
 
     S.stat=function(t){
       var T=TOWER[t.kind],L=t.lvl-1;
       return {range:T.range[L],dmg:T.dmg[L],cd:T.cd[L],aoe:T.aoe?T.aoe[L]:0,slow:T.slow?T.slow[L]:0,slowT:T.slowT?T.slowT[L]:0,dot:T.dot?T.dot[L]:0,dur:T.dur?T.dur[L]:0};
     };
     S.upCost=function(t){return t.lvl<MAXLV?UP[t.kind][t.lvl]:null;};
-    S.canConvert=function(t){return t.kind==='arch'&&t.lvl===1;};
+    S.canConvert=function(t){return t.kind==='arch'&&t.lvl===1&&!t.up;};
     S.upgrade=function(i){
       var t=S.towers[i],c=S.upCost(t);
-      if(c==null||S.gold<c||S.over)return false;
-      S.gold-=c;t.spent+=c;t.lvl++;S.fx.push({k:'upgrade',tw:i});return true;
+      if(c==null||S.gold<c||S.over||t.up)return false;
+      S.gold-=c;t.spent+=c;var tot=upTime(t.kind,t.lvl+1);t.up={left:tot,total:tot,to:t.lvl+1};S.fx.push({k:'upstart',tw:i});return true;
     };
     S.convert=function(i,kind){
       var t=S.towers[i];
@@ -383,7 +382,7 @@ var SIMLIB=(function(){
     S.sellValue=function(t){return Math.floor(t.spent*0.5);};
     S.sell=function(i){
       var t=S.towers[i];
-      if(S.over||!t.spent)return false;
+      if(S.over||!t.spent||t.up)return false;
       var g=S.sellValue(t);S.gold+=g;t.kind='arch';t.lvl=1;t.spent=0;t.cd=0.6;S.fx.push({k:'sell',tw:i,gold:g});return true;
     };
     S.squadCost=function(){return S.squad.lvl<MAXLV?SQUAD.up[S.squad.lvl]:null;};
@@ -392,8 +391,8 @@ var SIMLIB=(function(){
     S.squadRate=function(l){l=l||S.squad.lvl;return S.squadN(l)/SQUAD.base[l-1];};
     S.upgradeSquad=function(){
       var c=S.squadCost();
-      if(c==null||S.gold<c||S.over)return false;
-      var m0=S.door.max;S.gold-=c;S.squad.lvl++;S.door.max=doorMax(S.squad.lvl);S.door.hp+=S.door.max-m0;S.fx.push({k:'squadup'});return true;
+      if(c==null||S.gold<c||S.over||S.squad.up)return false;
+      S.gold-=c;var tot=squadUpTime(S.squad.lvl+1);S.squad.up={left:tot,total:tot,to:S.squad.lvl+1};S.fx.push({k:'squadstart'});return true;
     };
 
     S.startWave=function(){
@@ -402,6 +401,7 @@ var SIMLIB=(function(){
       var c=WAVES[S.wave-1],q=[],t,k;
       for(t=0;t<5;t++)for(k=0;k<c[t];k++)q.push(t);
       for(k=q.length-1;k>0;k--){var j=Math.floor(rng()*(k+1)),x=q[k];q[k]=q[j];q[j]=x;}
+      if(bossType(S.wave)>=0)q.push(100+bossType(S.wave));   // boss every 5 waves, always last
       S.spawnQ=q;S.spawnT=0.4;
       S.fx.push({k:'wave',n:S.wave});
       return true;
@@ -410,26 +410,28 @@ var SIMLIB=(function(){
     S.reseed=function(n){rng=mulberry(n);S.rng=rng;};
     S.snapshot=function(){
       return {v:1,diff:S.diff,wave:S.wave,gold:S.gold,hp:S.door.hp,broken:S.door.broken,leaks:S.leaks,kills:S.kills,squad:S.squad.lvl,
-        towers:S.towers.map(function(t){return {k:t.kind,l:t.lvl,s:t.spent};}),pt:S.playT,md:S.minDoor,dh:S.doorHits,dl:S.doorLost,t:Date.now()};
+        towers:S.towers.map(function(t){return {k:t.kind,l:t.lvl,s:t.spent,u:t.up?[t.up.left,t.up.total]:0};}),su:S.squad.up?[S.squad.up.left,S.squad.up.total]:0,bk:S.bossKills,pt:S.playT,md:S.minDoor,dh:S.doorHits,dl:S.doorLost,t:Date.now()};
     };
     S.restore=function(sn){
       if(!sn||sn.v!==1||!sn.towers||sn.towers.length!==S.towers.length)return false;
       S.diff=sn.diff|0;S.wave=sn.wave|0;S.gold=sn.gold;S.leaks=sn.leaks|0;S.kills=sn.kills|0;S.squad.lvl=Math.max(1,Math.min(MAXLV,sn.squad|0));S.door.max=doorMax(S.squad.lvl);
       S.door.hp=Math.max(1,Math.min(S.door.max,sn.hp));S.door.broken=!!sn.broken&&S.door.hp<DOOR.reopenAt;S.door.last=-99;
-      sn.towers.forEach(function(q,i){var t=S.towers[i];t.kind=TOWER[q.k]?q.k:'arch';t.lvl=Math.max(1,Math.min(MAXLV,q.l|0));t.spent=q.s|0;t.cd=0.5;});
+      sn.towers.forEach(function(q,i){var t=S.towers[i];t.kind=TOWER[q.k]?q.k:'arch';t.lvl=Math.max(1,Math.min(MAXLV,q.l|0));t.spent=q.s|0;t.cd=0.5;t.up=(q.u&&q.u[0]>0&&t.lvl<MAXLV)?{left:+q.u[0],total:+q.u[1]||+q.u[0],to:t.lvl+1}:null;});
       S.active=false;S.enemies=[];S.proj=[];S.spawnQ=[];S.countdown=null;S.playT=+sn.pt||0;S.minDoor=sn.md>0&&sn.md<=1?+sn.md:1;S.doorHits=+sn.dh||0;S.doorLost=+sn.dl||0;
+      S.squad.up=(sn.su&&sn.su[0]>0&&S.squad.lvl<MAXLV)?{left:+sn.su[0],total:+sn.su[1]||+sn.su[0],to:S.squad.lvl+1}:null;S.bossKills=sn.bk!=null?(sn.bk|0):Math.floor(S.wave/5);
       S.reseed(S.wave*7919+13);return true;
     };
 
     function spawn(t){
+      var boss=t>=100;if(boss)t-=100;var bm=boss?BOSS.mul:1;
       var lane=(S.laneToggle^=1)?'A':'B',T=TYPES[t],mul=hpMul(S.wave);
-      S.enemies.push({id:S.nid++,t:t,hp:T.hp*mul*DIFF[S.diff].hp,max:T.hp*mul*DIFF[S.diff].hp,pt:0,pdur:1,pdps:0,pacc:0,pfx:0,bt:0,bdur:1,bdps:0,bacc:0,bfx:0,lane:lane,path:paths[lane],s:0,x:0,z:0,tx:1,tz:0,
-        lat:0,rank:null,stopD:0,tl:0,atDoor:false,inside:false,slowUntil:0,slowF:0,dead:false,sp:T.speed,dps:T.dps+(S.wave-1)});
+      S.enemies.push({id:S.nid++,t:t,hp:T.hp*mul*DIFF[S.diff].hp*bm,max:T.hp*mul*DIFF[S.diff].hp*bm,boss:boss,pt:0,pdur:1,pdps:0,pacc:0,pfx:0,bt:0,bdur:1,bdps:0,bacc:0,bfx:0,lane:lane,path:paths[lane],s:0,x:0,z:0,tx:1,tz:0,
+        lat:0,rank:null,stopD:0,tl:0,atDoor:false,inside:false,slowUntil:0,slowF:0,dead:false,sp:T.speed,dps:(T.dps+(S.wave-1))*bm});if(boss)S.fx.push({k:'boss',t:t});
     }
     function kill(e){
       if(e.dead)return;e.dead=true;
-      var gg=Math.round(TYPES[e.t].gold*(1+GOLDG*(S.wave-1)));S.gold+=gg;S.kills++;
-      S.fx.push({k:'death',x:e.x,z:e.z,t:e.t,gold:gg});
+      var gg=Math.round(TYPES[e.t].gold*(1+GOLDG*(S.wave-1)))*(e.boss?BOSS.mul:1);S.gold+=gg;S.kills++;if(e.boss)S.bossKills++;
+      S.fx.push({k:'death',x:e.x,z:e.z,t:e.t,gold:gg,boss:!!e.boss});
     }
     function hit(e,d){if(e.dead)return;e.hp-=d;if(e.hp<=0)kill(e);}
 
@@ -498,12 +500,16 @@ var SIMLIB=(function(){
       if(S.over)return;
       S.time+=dt;
       var i,e,j;
+      if(S.squad.up){
+        S.squad.up.left-=dt;
+        if(S.squad.up.left<=0){var m0=S.door.max;S.squad.lvl=S.squad.up.to;S.squad.up=null;S.door.max=doorMax(S.squad.lvl);S.door.hp+=S.door.max-m0;S.fx.push({k:'squadup'});}
+      }
       // countdown to next wave
       if(S.countdown!=null){S.countdown-=dt;if(S.countdown<=0)S.startWave();}
       // spawns
       if(S.spawnQ.length){
         S.spawnT-=dt;
-        if(S.spawnT<=0){var t=S.spawnQ.shift();spawn(t);S.spawnT=(0.55+0.18*t)*(0.7+rng()*0.6);}
+        if(S.spawnT<=0){var t=S.spawnQ.shift();spawn(t);S.spawnT=(0.55+0.18*(t%100))*(0.7+rng()*0.6);}
       }
       // door queue: enemies close to an intact door line up in front of it
       var door=S.door,wait=[];
@@ -546,7 +552,7 @@ var SIMLIB=(function(){
         var p=posAt(e.path,e.s);
         e.x=p.x+(-p.tz)*e.lat;e.z=p.z+p.tx*e.lat;e.tx=p.tx;e.tz=p.tz;
         if(e.s>=endS[e.lane]-0.3){
-          e.dead=true;S.enemies.splice(i,1);S.leaks++;S.fx.push({k:'leak',x:e.x,z:e.z});
+          e.dead=true;S.enemies.splice(i,1);S.leaks+=e.boss?BOSS.leak:1;S.fx.push({k:'leak',x:e.x,z:e.z,n:e.boss?BOSS.leak:1});
           if(S.leaks>=S.leakMax){S.over='lose';}
         }
       }
@@ -564,7 +570,9 @@ var SIMLIB=(function(){
       var dfr=door.hp/door.max;if(dfr<S.minDoor)S.minDoor=dfr;
       // towers
       for(i=0;i<S.towers.length;i++){
-        var tw=S.towers[i];tw.cd-=dt;
+        var tw=S.towers[i];
+        if(tw.up){tw.up.left-=dt;if(tw.up.left<=0){tw.lvl=tw.up.to;tw.up=null;tw.cd=0.3;S.fx.push({k:'upgrade',tw:i});}continue;}
+        tw.cd-=dt;
         if(tw.cd>0)continue;
         var st=S.stat(tw),best=null,bs=-1,r2=st.range*st.range;
         for(j=0;j<S.enemies.length;j++){
@@ -585,8 +593,8 @@ var SIMLIB=(function(){
         S.fx.push({k:'fire',tw:i});
       }
       // wall archers
-      var sq=S.squad;sq.cd-=dt;
-      if(sq.cd<=0){
+      var sq=S.squad;if(!sq.up)sq.cd-=dt;
+      if(sq.cd<=0&&!sq.up){
         var n=S.squadN(),bt=null,bd=1e9;
         for(j=0;j<S.enemies.length;j++){
           e=S.enemies[j];if(e.dead)continue;
@@ -615,7 +623,7 @@ var SIMLIB=(function(){
     };
     return S;
   }
-  return {MAXLV:MAXLV,DIFF:DIFF,hpMul:hpMul,create:create,TYPES:TYPES,WAVES:WAVES,TOWER:TOWER,UP:UP,CONVERT:CONVERT,SQUAD:SQUAD,DOOR:DOOR,doorMax:doorMax,posAt:posAt};
+  return {MAXLV:MAXLV,bossType:bossType,upTime:upTime,squadUpTime:squadUpTime,UPT_MAX:UPT_MAX,SQUAD_UPT:SQUAD_UPT,BOSS:BOSS,DIFF:DIFF,hpMul:hpMul,create:create,TYPES:TYPES,WAVES:WAVES,TOWER:TOWER,UP:UP,CONVERT:CONVERT,SQUAD:SQUAD,DOOR:DOOR,doorMax:doorMax,posAt:posAt};
 })();
 
 
@@ -1129,7 +1137,7 @@ function wizardMan(){
 /* ---------- castle (ancient gate) ---------- */
 var CAS=M.castle;
 var squadMen=[],doorLeaves=[],doorCracks=[],DOORW=new THREE.Vector3();
-var SQ_POS=[[-0.8,5.15,1.2],[0.8,5.15,1.2],[0,5.15,0.2],[4.4,5.25,0.7],[-5.2,5.25,0.7],[5.4,5.25,-0.5],[-4.2,5.25,-0.5]];   // 2 front, 1 back (middle); then right/left tower, right/left second
+var SQ_POS=[[-0.8,5.15,1.2],[0.8,5.15,1.2],[0,5.15,0.2],[4.9,5.25,0.9],[-4.7,5.25,0.9],[5.7,5.25,-0.5],[-5.5,5.25,-0.5]];   // 2 front, 1 back (middle); then right/left tower front row (level with each other), right/left tower back row (mirrored)
 var castle=(function(){
   var g=new THREE.Group(),S1=0x9a9ca2,S2=0x80838a,S3=0x6e7076;
   function merlons(w,y,z,n,c,sz){for(var i=0;i<n;i++){box(sz||0.55,0.55,0.5,c,-w/2+i*(w/(n-1)),y,z,g);}}
@@ -1760,18 +1768,25 @@ var poiRingM=new THREE.MeshBasicMaterial({color:C(0x7dff4a),transparent:true,opa
 var burnRingM=new THREE.MeshBasicMaterial({color:C(0xff8a2e),transparent:true,opacity:0.85,side:THREE.DoubleSide,depthWrite:false});
 var slowRingG=new THREE.RingGeometry(0.34,0.52,20),slowRingM=new THREE.MeshBasicMaterial({color:C(0x7fe6ff),transparent:true,opacity:0.8,side:THREE.DoubleSide,depthWrite:false});
 function makeEnemy(e){
-  var p=EN[e.t]();p.g.scale.setScalar(EN_SC[e.t]);
+  var bs=e.boss?1.9:1;var p=EN[e.t]();p.g.scale.setScalar(EN_SC[e.t]*bs);
   var grp=new THREE.Group();grp.add(p.g);mark(p.g,true,false);
-  var sr=new THREE.Mesh(slowRingG,slowRingM);sr.rotation.x=-Math.PI/2;sr.position.y=0.06;sr.scale.setScalar(EN_SC[e.t]*1.6);sr.visible=false;grp.add(sr);
-  var pr=new THREE.Mesh(slowRingG,poiRingM);pr.rotation.x=-Math.PI/2;pr.position.y=0.08;pr.scale.setScalar(EN_SC[e.t]*1.9);pr.visible=false;grp.add(pr);
-  var bar=new THREE.Group(),w=0.7+0.14*e.t;
+  var aura=null;
+  if(e.boss){
+    var HH=EN_H[e.t]*EN_SC[e.t]*bs;
+    cone(0.55,0.7,5,0xffd25a,0,HH+0.3,0,grp,{emissive:0xffa030,emissiveIntensity:1.2});octa(0.24,0xff3a2a,0,HH+0.95,0,grp,{emissive:0xff2a1a,emissiveIntensity:1.8});
+    aura=new THREE.Mesh(slowRingG,bossRingM);aura.rotation.x=-Math.PI/2;aura.position.y=0.1;grp.add(aura);
+  }
+  var sr=new THREE.Mesh(slowRingG,slowRingM);sr.rotation.x=-Math.PI/2;sr.position.y=0.06;sr.scale.setScalar(EN_SC[e.t]*1.6*bs);sr.visible=false;grp.add(sr);
+  var pr=new THREE.Mesh(slowRingG,poiRingM);pr.rotation.x=-Math.PI/2;pr.position.y=0.08;pr.scale.setScalar(EN_SC[e.t]*1.9*bs);pr.visible=false;grp.add(pr);
+  var bar=new THREE.Group(),w=(0.7+0.14*e.t)*(e.boss?2.2:1);
   var b1=new THREE.Mesh(planeG,barBackM);b1.scale.set(w+0.06,0.13,1);bar.add(b1);
   var fm=new THREE.MeshBasicMaterial({color:C(0x6fd28b)});
   var b2=new THREE.Mesh(planeG,fm);b2.position.z=0.01;bar.add(b2);
   bar.rotation.x=-0.98;bar.visible=false;
   scene.add(grp);scene.add(bar);
-  return {grp:grp,p:p,sr:sr,pr:pr,bar:bar,b2:b2,fm:fm,w:w,ph:rnd()*6,seen:0};
+  return {grp:grp,aura:aura,p:p,sr:sr,pr:pr,bar:bar,b2:b2,fm:fm,w:w,ph:rnd()*6,seen:0};
 }
+var bossRingM=new THREE.MeshBasicMaterial({color:C(0xff3a2a),transparent:true,opacity:0.9,side:THREE.DoubleSide,depthWrite:false});
 var frameN=0;
 function updateEnemies(now){
   var i,e,v;
@@ -1779,7 +1794,7 @@ function updateEnemies(now){
     e=S.enemies[i];v=evis[e.id];
     if(!v)v=evis[e.id]=makeEnemy(e);
     v.seen=frameN;
-    var bridge=dRiver(e.x,e.z)<RH+0.9,sc=EN_SC[e.t];
+    var bridge=dRiver(e.x,e.z)<RH+0.9,sc=EN_SC[e.t]*(e.boss?1.9:1);
     var moving=!e.atDoor,spd=e.sp*(1-e.slowF),fr=spd*5.5,sw=Math.sin(now*fr+v.ph)*0.7;
     v.grp.position.set(e.x,(bridge?0.4:0.06)+(moving?Math.abs(Math.sin(now*fr+v.ph))*0.06*sc:0),e.z);
     v.grp.rotation.y=Math.atan2(e.tx,e.tz);
@@ -1791,13 +1806,14 @@ function updateEnemies(now){
       p.legL.rotation.x=0;p.legR.rotation.x=0;
       p.armR.rotation.x=-2.5+Math.abs(sv)*2.0;p.armL.rotation.x=-1.0+sv*0.5;p.g.rotation.x=0.12*Math.abs(sv);
     }
+    if(v.aura){v.aura.scale.setScalar(sc*2.6*(1+0.12*Math.sin(now*4)));v.aura.rotation.z=now;}
     v.sr.visible=e.slowUntil>S.time;
     v.pr.visible=e.pt>0||e.bt>0;
     v.pr.material=e.bt>0?burnRingM:poiRingM;
     if(e.bt>0&&rnd()<0.15)emit(e.x,0.5+EN_H[e.t]*sc*0.5,e.z,1,[0xff9a2e,0xffd25a],0.6,0.5,0.12,2);
     if(e.pt>0&&rnd()<0.12)emit(e.x,0.5+EN_H[e.t]*sc*0.5,e.z,1,[0x7dff4a,0x4aa83a],0.5,0.6,0.1,1.2);
     var fr2=Math.max(0,e.hp/e.max);
-    v.bar.visible=fr2<0.999;
+    v.bar.visible=!!e.boss||fr2<0.999;
     if(v.bar.visible){
       v.bar.position.set(e.x,EN_H[e.t]*sc+0.55+(bridge?0.4:0),e.z);
       v.b2.scale.set(v.w*fr2,0.09,1);v.b2.position.x=-(v.w-v.w*fr2)/2;
@@ -1911,6 +1927,7 @@ var sellArm=-1;
 function setSel(s){
   sellArm=-1;sel=s;renderSheet();
 }
+function upBar(u,label){var f=Math.max(0,Math.min(1,1-u.left/u.total));return '<div class="note">'+label+' · '+Math.ceil(u.left)+' s left</div><div class="pbar"><i style="width:'+(f*100).toFixed(0)+'%"></i></div>';}
 function statRow(label,a,b,fmt){
   var f=fmt||function(x){return x;};
   return '<div class="row"><span>'+label+'</span><b>'+f(a)+(b!=null&&b!==a?' <em>→ '+f(b)+'</em>':'')+'</b></div>';
@@ -1930,15 +1947,16 @@ function renderSheet(){
     if(st.slow){var sf=function(x){return '÷'+(1/(1-x)).toFixed(2);};h+=statRow('Slows speed by',st.slow,nx&&nx.slow,sf);h+=statRow('Slow time',st.slowT,nx&&nx.slowT,function(x){return x.toFixed(1)+' s';});}
     if(st.dot){var nm=t.kind==='fire'?'Burn':'Poison';h+=statRow(nm+' damage',st.dot,nx&&nx.dot,fmtN);h+=statRow(nm+' time',st.dur,nx&&nx.dur,function(x){return x.toFixed(2)+' s';});}
     h+='</div><div class="acts">';
-    if(cost!=null)h+='<button class="act" data-act="up"'+(S.gold<cost?' disabled':'')+'><span>Upgrade to level '+(t.lvl+1)+'</span><b>'+cost+'</b></button>';
+    if(t.up)h+=upBar(t.up,'Upgrading to level '+t.up.to+' (tower paused)');
+    else if(cost!=null)h+='<button class="act" data-act="up"'+(S.gold<cost?' disabled':'')+'><span>Upgrade to level '+(t.lvl+1)+' · '+SIMLIB.upTime(t.kind,t.lvl+1)+' s</span><b>'+cost+'</b></button>';
     else h+='<div class="note">Maximum level</div>';
     if(S.canConvert(t)){
       h+='<button class="act alt" data-act="to-stone"'+(S.gold<SIMLIB.CONVERT.stone?' disabled':'')+'><span>Change to Stone tower</span><b>'+SIMLIB.CONVERT.stone+'</b></button>';
       h+='<button class="act alt" data-act="to-magic"'+(S.gold<SIMLIB.CONVERT.magic?' disabled':'')+'><span>Change to Ice tower</span><b>'+SIMLIB.CONVERT.magic+'</b></button>';
       h+='<button class="act alt" data-act="to-poison"'+(S.gold<SIMLIB.CONVERT.poison?' disabled':'')+'><span>Change to Poison tower</span><b>'+SIMLIB.CONVERT.poison+'</b></button>';
       h+='<button class="act alt" data-act="to-fire"'+(S.gold<SIMLIB.CONVERT.fire?' disabled':'')+'><span>Change to Fire tower</span><b>'+SIMLIB.CONVERT.fire+'</b></button>';
-    }else if(t.kind==='arch')h+='<div class="note">Archer towers above level 1 can no longer change type.</div>';
-    if(t.spent>0){
+    }else if(t.kind==='arch'&&!t.up&&t.lvl>1)h+='<div class="note">Archer towers above level 1 can no longer change type.</div>';
+    if(t.spent>0&&!t.up){
       if(sellArm===sel.i)h+='<div class="note warn">Sell this '+KNAME[t.kind]+' tower level '+t.lvl+' and get +'+S.sellValue(t)+' gold? It goes back to a level 1 Archer.</div><div class="two"><button class="act sell" data-act="sell-yes"><span>Yes, sell</span><b>+'+S.sellValue(t)+'</b></button><button class="act" data-act="sell-no"><span>Cancel</span></button></div>';
       else h+='<button class="act sell" data-act="sell"><span>Sell tower (back to Archer)</span><b>+'+S.sellValue(t)+'</b></button>';
     }
@@ -1957,7 +1975,8 @@ function renderSheet(){
     h+=statRow('Gate health (max)',S.door.max,L<SIMLIB.MAXLV?SIMLIB.doorMax(L+1):null,fmtS);
     h+='<div class="row"><span>Door now</span><b>'+Math.ceil(S.door.hp)+' / '+S.door.max+'</b></div>';
     h+='</div><div class="acts">';
-    if(c!=null)h+='<button class="act" data-act="squad"'+(S.gold<c?' disabled':'')+'><span>Upgrade to level '+(L+1)+'</span><b>'+c+'</b></button>';
+    if(S.squad.up)h+=upBar(S.squad.up,'Upgrading to level '+S.squad.up.to+' (mages paused)');
+    else if(c!=null)h+='<button class="act" data-act="squad"'+(S.gold<c?' disabled':'')+'><span>Upgrade to level '+(L+1)+' · '+SIMLIB.squadUpTime(L+1)+' s</span><b>'+c+'</b></button>';
     else h+='<div class="note">Maximum level</div>';
     h+='<div class="note">The door repairs itself by '+SIMLIB.DOOR.regen+' HP per second after '+SIMLIB.DOOR.regenDelay+' s without attacks.</div></div>';
     var RG=S.squadRange();rangeRing.position.set(S.gate.x,0.16,S.gate.z);rangeRing.scale.set(RG,RG,1);rangeRing.visible=true;
@@ -1988,9 +2007,9 @@ function hud(force){
   setText('gold',String(Math.floor(S.gold)));
   setText('doortxt',Math.ceil(d.hp)+(d.broken?' broken':''));
   var f=el('doorfill');f.style.width=(fr*100).toFixed(1)+'%';f.style.background=d.broken?'#d2574a':(fr>0.5?'#6fd28b':(fr>0.25?'#e0b040':'#d2574a'));
-  setText('leaks',S.leaks+'/'+S.leakMax);
+  setText('leaks',Math.min(S.leaks,S.leakMax)+'/'+S.leakMax);
   var shown=S.active?S.wave:Math.min(S.wave+1,S.waveMax);
-  setText('waveTxt','Wave '+(shown<10?'0':'')+shown+'/'+S.waveMax);
+  setText('waveTxt','Wave '+(shown<10?'0':'')+shown+'/'+S.waveMax+(SIMLIB.bossType(shown)>=0?' ★':''));
   var done=S.active?S.wave-1:S.wave;
   setText('q3','Difficulty: '+DNAME[S.diff]);
   var hm=SIMLIB.hpMul(shown),dfc=SIMLIB.DIFF[S.diff];
@@ -2017,13 +2036,17 @@ function showToast(t,sub){
 
 /* end of game */
 var endShown=false;
-var SCOREKEY='defensetowers.scores.v1',DMULT=[1,1.5,2];
+var SCOREKEY='defensetowers.scores.v2',DMULT=[1,1.5,2];
 function loadScores(){try{var o=JSON.parse(localStorage.getItem(SCOREKEY)||'null');if(o&&o.length===3)return o;}catch(e){}return [[],[],[]];}
 function saveScores(o){try{localStorage.setItem(SCOREKEY,JSON.stringify(o));}catch(e){}}
+/* score (win only) = (5.000 win + speed 0-10.000 + village 0-6.000 + gate 0-4.000 + front line 0-3.000 + 750 per boss) x difficulty multiplier */
+function totalEnemies(){var n=0;SIMLIB.WAVES.forEach(function(w){w.forEach(function(c){n+=c;});});return n+Math.floor(S.waveMax/5);}
 function calcScore(){
   var lost=Math.max(0,Math.min(100,(1-S.minDoor)*100));
-  var base=Math.max(0,10000-S.playT*2-S.leaks*150-lost*20);
-  return {score:Math.round(base*DMULT[S.diff]),time:Math.round(S.playT),leaks:S.leaks,lost:Math.round(lost),kills:S.kills,diff:S.diff,hits:S.doorHits,hpLost:Math.round(S.doorLost)};
+  var tot=totalEnemies();
+  var P={win:5000,speed:Math.round(10000*Math.pow(0.5,S.playT/1800)),village:Math.round(6000*(1-Math.min(1,S.leaks/S.leakMax))),gate:Math.round(4000*Math.max(0,Math.min(1,S.minDoor))),front:Math.round(3000*(1-Math.min(1,S.doorHits/tot))),boss:750*S.bossKills};
+  var base=P.win+P.speed+P.village+P.gate+P.front+P.boss;
+  return {score:Math.round(base*DMULT[S.diff]),base:base,parts:P,time:Math.round(S.playT),leaks:S.leaks,lost:Math.round(lost),kills:S.kills,diff:S.diff,hits:S.doorHits,hpLost:Math.round(S.doorLost),bosses:S.bossKills,total:tot};
 }
 function fmtT(t){var m=Math.floor(t/60),s=t%60;return m+':'+(s<10?'0':'')+s;}
 function fmtS(v){return String(v).replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
@@ -2032,7 +2055,7 @@ function achHtml(sc,mine){
   var h='';
   for(var d=2;d>=0;d--){
     h+='<div class="ah">'+DNAME[d]+' (×'+DMULT[d].toString().replace('.',',')+')</div>';
-    if(!sc[d].length)h+='<div class="ar none">No result yet</div>';
+    if(!sc[d].length)h+='<div class="ar none">No result yet</div>';else h+='<div class="ar hd"><i>#</i><span>Score</span><span>Name</span><span>Time</span></div>';
     sc[d].forEach(function(r,i){h+='<div class="ar'+(mine&&mine.d===d&&mine.i===i?' me':'')+'"><i>'+(i+1)+'</i><span>'+fmtS(r.score)+'</span><span class="nm">'+esc(r.name||'Player')+'</span><span>'+fmtT(r.time)+'</span></div>';});
   }
   return h;
@@ -2062,7 +2085,7 @@ function checkEnd(){
   el('endName').innerHTML='';
   if(win){
     var r=calcScore(),all=loadScores(),rk=rankOf(r,all);pendWin={r:r};
-    el('endStats').innerHTML='<div class="st"><span>Mode</span><b>'+DNAME[r.diff]+'</b><span>Time (at ×1)</span><b>'+fmtT(r.time)+'</b><span>Enemies defeated</span><b>'+r.kills+'</b><span>Reached the village</span><b>'+r.leaks+' / '+S.leakMax+'</b><span>Enemies at the gate</span><b>'+r.hits+'</b><span>Gate health lost (total)</span><b>'+fmtS(r.hpLost)+'</b><span class="sc">Score</span><b class="sc">'+fmtS(r.score)+'</b></div>';
+    var pp=r.parts;el('endStats').innerHTML='<div class="st"><span>Mode</span><b>'+DNAME[r.diff]+'</b><span>Time (at ×1)</span><b>'+fmtT(r.time)+'</b><span>Enemies defeated</span><b>'+r.kills+' / '+r.total+'</b><span>Reached the village</span><b>'+r.leaks+' / '+S.leakMax+'</b><span>Enemies at the gate</span><b>'+r.hits+'</b><span>Gate health lost (total)</span><b>'+fmtS(r.hpLost)+'</b><span>Victory</span><b>+'+fmtS(pp.win)+'</b><span>Speed <small>(max 10.000)</small></span><b>+'+fmtS(pp.speed)+'</b><span>Village safe <small>(max 6.000)</small></span><b>+'+fmtS(pp.village)+'</b><span>Gate integrity <small>(max 4.000)</small></span><b>+'+fmtS(pp.gate)+'</b><span>Stopped before the gate <small>(max 3.000)</small></span><b>+'+fmtS(pp.front)+'</b><span>Bosses defeated '+r.bosses+' / '+Math.floor(S.waveMax/5)+'</span><b>+'+fmtS(pp.boss)+'</b><span>Subtotal × '+DMULT[r.diff].toString().replace('.',',')+'</span><b>'+fmtS(r.base)+'</b><span class="sc">Score</span><b class="sc">'+fmtS(r.score)+'</b></div>';
     if(rk<3){
       el('endName').innerHTML='<div style="font-size:15px;color:#ff8a2e">New top-3 score in '+DNAME[r.diff]+'! Enter your name:</div><div class="nameRow"><input id="nameIn" maxlength="12" autocomplete="off" placeholder="Name" value="'+esc(lastName())+'"><button type="button" id="nameOk">Save</button></div>';
       el('endAch').innerHTML='<h4 style="margin:0;font-size:17px;color:var(--gold)">Achievements</h4>'+achHtml(all);
@@ -2283,8 +2306,8 @@ function handleFx(){
     else if(f.k==='poison'){AU.splash(PN(f.x));poisonFx(f.x,f.z,f.r);}
     else if(f.k==='pdmg'){if(f.v>=5&&pops.length<26)popup('-'+fmtN(f.v),'#6ff04a',f.x+rr(-0.2,0.2),1.7,f.z);}
     else if(f.k==='frost'){AU.frost(PN(f.x));frostFx(f.x,f.z,f.r);}
-    else if(f.k==='death'){AU.death(f.t,PN(f.x));emit(f.x,0.6,f.z,7,[0xefe2c8,0xc9a36a,0x8a4a2a],2.2,0.5,0.14,3);popup('+'+f.gold,'#ffd25a',f.x,1.6,f.z);}
-    else if(f.k==='leak'){AU.leak();popup('−1','#ff7a6a',f.x,2.0,f.z);emit(f.x,0.8,f.z,8,[0xff7a6a,0xffd0c0],2,0.6,0.14,3);}
+    else if(f.k==='death'){AU.death(f.t,PN(f.x));emit(f.x,0.6,f.z,7,[0xefe2c8,0xc9a36a,0x8a4a2a],2.2,0.5,0.14,3);popup('+'+f.gold,'#ffd25a',f.x,1.6,f.z);if(f.boss){ringFx(f.x,f.z,4,0xff4a3a,0.9);emit(f.x,1.2,f.z,22,[0xff4a3a,0xffd25a,0xffffff],5,1.0,0.2,5);showToast('BOSS DEFEATED','+'+f.gold+' gold');}}
+    else if(f.k==='leak'){AU.leak();popup('−'+(f.n||1),'#ff7a6a',f.x,2.0,f.z);emit(f.x,0.8,f.z,8,[0xff7a6a,0xffd0c0],2,0.6,0.14,3);}
     else if(f.k==='upgrade'){
       refreshTower(f.tw,true);AU.upgrade();var q=pads[f.tw];
       ringFx(q.x,q.z,2.4,0xffd25a,0.7);emit(q.x,1.0,q.z,12,[0xffd25a,0xffffff],2.5,0.8,0.12,4);
@@ -2293,7 +2316,10 @@ function handleFx(){
     }else if(f.k==='doorbreak'){AU.doorbreak(PN(DOORW.x));
       emit(DOORW.x,1.0,DOORW.z,26,[0x7b4a28,0x5a3a22,0xb08050],4,0.9,0.2,5);showToast('The door is broken!','Enemies can run into the village');
     }else if(f.k==='doorfix'){AU.doorfix(PN(DOORW.x));ringFx(DOORW.x,DOORW.z,2.5,0x6fd28b,0.8);emit(DOORW.x,1.2,DOORW.z,10,[0x6fd28b,0xffffff],2,0.8,0.12,3);}
-    else if(f.k==='wave'){AU.wave();showToast('WAVE '+(f.n<10?'0':'')+f.n,f.n===S.waveMax?'Final wave':'');}
+    else if(f.k==='wave'){AU.wave();showToast('WAVE '+(f.n<10?'0':'')+f.n,(f.n===S.waveMax?'Final wave':'')+(SIMLIB.bossType(f.n)>=0?(f.n===S.waveMax?' · ':'')+'Boss '+SIMLIB.TYPES[SIMLIB.bossType(f.n)].name+' comes last':''));}
+    else if(f.k==='boss'){AU.doorbreak(PN(DOORW.x));showToast('BOSS · '+SIMLIB.TYPES[f.t].name,'×10 stats · counts as 10 villages');}
+    else if(f.k==='upstart'){AU.click();var u0=pads[f.tw];ringFx(u0.x,u0.z,1.8,0x59d6ff,0.5);}
+    else if(f.k==='squadstart'){AU.click();ringFx(S.gate.x,S.gate.z,3,0x59d6ff,0.6);}
     else if(f.k==='saved'){showToast('Game saved','Wave '+f.n+' cleared');}
     else if(f.k==='wavedone'){popup('+'+f.bonus,'#ffd25a',DOORW.x,3.2,DOORW.z);}
   }
@@ -2444,6 +2470,64 @@ menu.addEventListener('click',function(e){
   else if(a==='shadow'){shadowOn=!shadowOn;sun.castShadow=shadowOn;b.textContent='Shadows: '+(shadowOn?'On':'Off');}
 });
 
+/* ---------- upgrade progress bars + max-level energy rings ---------- */
+var EN_COL={arch:0xff4a3a,stone:0xb07bff,magic:0x59d6ff,poison:0x7dff4a,fire:0xff9a1e,castle:0xffd25a};
+var uBars={},CUPW=new THREE.Vector3();
+function getUBar(key){
+  if(uBars[key])return uBars[key];
+  var g=new THREE.Group(),bk=new THREE.Mesh(planeG,new THREE.MeshBasicMaterial({color:C(0x1b1510),transparent:true,opacity:0.9,depthTest:false})),fm=new THREE.MeshBasicMaterial({color:C(0x59d6ff),depthTest:false}),fl=new THREE.Mesh(planeG,fm);
+  bk.renderOrder=25;fl.renderOrder=26;fl.position.z=0.01;g.add(bk);g.add(fl);g.rotation.x=-0.98;g.visible=false;scene.add(g);
+  return uBars[key]={g:g,bk:bk,fl:fl};
+}
+function setUBar(b,fr,x,y,z,w){b.g.visible=true;b.g.position.set(x,y,z);b.bk.scale.set(w+0.1,0.26,1);b.fl.scale.set(Math.max(0.001,w*fr),0.16,1);b.fl.position.x=-(w-w*fr)/2;}
+function ringBandGeo(rx,rz,w,N){
+  var pos=[],idx=[],i;
+  for(i=0;i<=N;i++){var a=i/N*Math.PI*2,c=Math.cos(a),sn=Math.sin(a);pos.push(Math.max(0.01,rx-w)*c,0,Math.max(0.01,rz-w)*sn,(rx+w)*c,0,(rz+w)*sn);}
+  for(i=0;i<N;i++){var k=i*2;idx.push(k,k+1,k+2,k+1,k+3,k+2);}
+  var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setIndex(idx);return g;
+}
+var beadG=new THREE.OctahedronGeometry(1,0);
+function makeEnergy(col,o){
+  var g=new THREE.Group(),mt=new THREE.MeshBasicMaterial({color:C(col),transparent:true,opacity:0.8,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
+  var r1=new THREE.Mesh(ringBandGeo(o.rx,o.rz,o.w,56),mt);r1.position.y=o.y0;g.add(r1);
+  var r2=new THREE.Mesh(ringBandGeo(o.r2x,o.r2z,o.w,40),mt);r2.position.y=o.y1;g.add(r2);
+  var mb=new THREE.MeshBasicMaterial({color:C(col),transparent:true,opacity:0.95,blending:THREE.AdditiveBlending,depthWrite:false}),beads=[];
+  for(var c=0;c<2;c++)for(var k=0;k<5;k++){var m=new THREE.Mesh(beadG,mb);g.add(m);beads.push({m:m,ph:c*Math.PI+(c?0.6:0),k:k});}
+  return {g:g,o:o,mt:mt,beads:beads};
+}
+function updateEnergy(en,now){
+  var o=en.o;en.mt.opacity=0.7+0.2*Math.sin(now*3);
+  for(var i=0;i<en.beads.length;i++){
+    var b=en.beads[i],th=now*o.sp+b.ph-b.k*0.17,f=0.5+0.5*Math.sin(now*1.2+b.ph*1.7);
+    b.m.position.set(Math.cos(th)*o.rx,o.y0+(o.y1-o.y0)*f,Math.sin(th)*o.rz);b.m.scale.setScalar(o.size*(1-b.k*0.16));
+  }
+}
+var castleEn=null;
+function updateUp(now,dt){
+  var run=!paused&&!userPause;
+  pads.forEach(function(pd,i){
+    var t=S.towers[i],u=pd.node&&pd.node.userData,key='t'+i;
+    if(t.up&&u){
+      var hy=pd.y+0.2+u.top*u.sc+1.3;setUBar(getUBar(key),1-t.up.left/t.up.total,pd.x,hy,pd.z,1.9);
+      if(run&&rnd()<0.25)emit(pd.x+rr(-1,1),pd.y+0.4,pd.z+rr(-1,1),1,[0xd9b678,0xffffff],0.8,0.5,0.1,1.5);
+    }else if(uBars[key])uBars[key].g.visible=false;
+    if(t.lvl>=SIMLIB.MAXLV&&!t.up&&u){
+      if(!pd.en||pd.enK!==t.kind){
+        if(pd.en)scene.remove(pd.en.g);
+        var th=u.top*u.sc;pd.en=makeEnergy(EN_COL[t.kind],{rx:1.85,rz:1.85,r2x:1.5,r2z:1.5,w:0.1,y0:0.35,y1:th+0.2,sp:1.7,size:0.2});pd.enK=t.kind;scene.add(pd.en.g);
+      }
+      pd.en.g.visible=true;pd.en.g.position.set(pd.x,pd.y+0.2,pd.z);updateEnergy(pd.en,now);
+    }else if(pd.en)pd.en.g.visible=false;
+  });
+  var sq=S.squad;
+  if(sq.up){castle.localToWorld(CUPW.set(0,7.6,1.0));setUBar(getUBar('c'),1-sq.up.left/sq.up.total,CUPW.x,CUPW.y,CUPW.z,3.2);if(run&&rnd()<0.4)emit(S.gate.x+rr(-4,4),0.5,S.gate.z+rr(-1.5,1.5),1,[0xd9b678,0xffffff],0.8,0.5,0.12,1.5);}
+  else if(uBars.c)uBars.c.g.visible=false;
+  if(sq.lvl>=SIMLIB.MAXLV&&!sq.up){
+    if(!castleEn){castleEn=makeEnergy(EN_COL.castle,{rx:11.4,rz:3.5,r2x:3.1,r2z:2.7,w:0.28,y0:0.5,y1:7.4,sp:0.8,size:0.45});castleEn.g.position.set(0,0,0.3);castle.add(castleEn.g);}
+    castleEn.g.visible=true;updateEnergy(castleEn,now);
+  }else if(castleEn)castleEn.g.visible=false;
+}
+
 /* ---------- main loop ---------- */
 var last=nowT(),hudT=0,sheetT=0,doorT=0,growlT=2;
 function animateMen(men,kind,pd,now,t){
@@ -2534,6 +2618,7 @@ function frame(){
   });
   smokes.forEach(function(sm){var t=(now*0.28+sm.ph)%1;sm.m.visible=true;sm.m.position.set(sm.x+t*0.7,sm.y+0.1+t*2.0,sm.z+t*0.25);sm.m.scale.setScalar(0.1+t*0.32);sm.m.material.opacity=0.55*(1-t)*Math.min(1,t*6);});
   updateEnemies(now);
+  updateUp(now,dt);
   updateProjectiles(now);
   updateDoor(now,dt);
   updateFx(dt);
@@ -2577,4 +2662,5 @@ requestAnimationFrame(frame);
 
 </script>
 
-<script>if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});</script>
+<script>if('serviceWorker' in navigator&&location.protocol!=='file:'){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script>
+</body></html>

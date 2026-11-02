@@ -1,6 +1,11 @@
-var C='dt-v11',F=['./','index.html','three.min.js','icon-180.png'];
-self.addEventListener('install',function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll(F)}));self.skipWaiting();});
-self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==C}).map(function(x){return caches.delete(x)}))}));self.clients.claim();});
-self.addEventListener('fetch',function(e){if(e.request.method!=='GET')return;
-e.respondWith(new Promise(function(res){var done=false;var t=setTimeout(function(){caches.match(e.request).then(function(r){if(r&&!done){done=true;res(r)}})},4000);
-fetch(e.request).then(function(r){clearTimeout(t);if(!done){done=true;res(r)}var cp=r.clone();caches.open(C).then(function(c){c.put(e.request,cp)});}).catch(function(){clearTimeout(t);caches.match(e.request).then(function(r){if(!done){done=true;res(r||new Response('',{status:504}))}})});}));});
+// Fox Towers Defense service worker: network first (4 s), then cache
+var CACHE='dt-v12';
+self.addEventListener('install',function(e){self.skipWaiting();});
+self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});
+self.addEventListener('fetch',function(e){
+  var r=e.request;if(r.method!=='GET'||new URL(r.url).origin!==location.origin)return;
+  e.respondWith(new Promise(function(res){
+    var done=false,t=setTimeout(function(){caches.match(r).then(function(c){if(c&&!done){done=true;res(c);}});},4000);
+    fetch(r).then(function(n){clearTimeout(t);var cp=n.clone();caches.open(CACHE).then(function(c){c.put(r,cp);});if(!done){done=true;res(n);}}).catch(function(){clearTimeout(t);caches.match(r).then(function(c){if(!done){done=true;res(c||new Response('Offline',{status:503}));}});});
+  }));
+});
